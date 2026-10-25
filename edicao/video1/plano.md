@@ -144,3 +144,5 @@ Telas cheias na versão completa: 6, nos tempos 25,4 · 100,7 · 108,8 · 129,9 
 - **Pausas:** 63 pausas, somando 34,4 s, detectadas com os sons agudos incluídos (para não cortar o "s" no fim das palavras).
 - **Duração final:** curta com 44,3 s; completa com 2 min 20,5 s.
 - **Cor:** o vídeo nunca passa pelo navegador. O Remotion desenha só as camadas transparentes (legendas e ilustrações), e o ffmpeg corta o original e cola as camadas por cima (`edicao/scripts/exporta.py`). A conferência (`edicao/scripts/confere_cor.py`) mede um viés de 0,00 a 0,06 nível (de 0 a 255) nas áreas sem nada por cima, que é só o ruído da compressão.
+- **Vídeo base trocado pelo original do iPhone** (via Google Drive): HEVC 10 bits HDR (HLG/BT.2020), 11,3 Mbps, a mesma gravação (o som bate 100%, sem deslocamento). A cópia anterior tinha só 0,75 Mbps.
+  Por escolha do André, a exportação é em H.264 normal (SDR). A conversão HDR→SDR (`edicao/scripts/converte_hdr.py`, tonemap "hable" com branco de referência em 185 nits) foi calibrada contra a cópia SDR da mesma gravação: viés de cor ~0 (R −0,4, G +1,1, B −1,1). Cortes, legendas, ilustrações e máscaras foram reaproveitados.

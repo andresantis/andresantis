@@ -21,10 +21,11 @@ ZOOM_CROP = "crop=982:1746:44:69,scale=1080:1920:flags=lanczos"  # zoom 1,1x com
 
 remotion = ["npx", "remotion", "render", COMP, "--browser-executable=" + NAVEGADOR, "--log=error"]
 so_montagem = "--so-montagem" in sys.argv  # reaproveita camadas e áudio já renderizados
+refaz_audio = "--refaz-audio" in sys.argv  # com --so-montagem: reaproveita as camadas, mas refaz o áudio
 if not so_montagem and os.path.isdir(CAMADAS): shutil.rmtree(CAMADAS)
 if not so_montagem: subprocess.run(remotion + [CAMADAS, "--sequence", "--image-format=png", "--concurrency=4", "--image-sequence-pattern=q[frame].[ext]",
                            "--props=" + json.dumps({"versao": v, "modo": "camadas"})], check=True, cwd=RAIZ)
-if not so_montagem: subprocess.run(remotion + [AUDIO, "--codec=wav", "--props=" + json.dumps({"versao": v, "modo": "previa"})], check=True, cwd=RAIZ)
+if not so_montagem or refaz_audio: subprocess.run(remotion + [AUDIO, "--codec=wav", "--props=" + json.dumps({"versao": v, "modo": "previa"})], check=True, cwd=RAIZ)
 
 linha = json.load(open(RAIZ + f"src/video1/linha-{v}.json"))
 pngs = sorted(f for f in os.listdir(CAMADAS) if f.endswith(".png"))
@@ -61,7 +62,7 @@ filtro = (f"[0:v]settb=1/30,setpts=N,tpad=stop_mode=clone:stop={segura}[base];"
 subprocess.run(["ffmpeg", "-v", LOG, "-y", "-f", "concat", "-safe", "0", "-i", TRECHOS + "lista.txt",
                 "-framerate", "30", "-start_number", "0", "-i", padrao, "-i", AUDIO,
                 "-filter_complex", filtro, "-map", "[out]", "-map", "2:a",
-                "-fps_mode", "cfr", "-r", "30", "-c:v", "libx264", "-crf", "16", "-preset", "medium", "-pix_fmt", "yuv420p",
+                "-fps_mode", "cfr", "-r", "30", "-c:v", "libx264", "-crf", "14", "-preset", "slow", "-pix_fmt", "yuv420p",
                 "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv",
                 "-c:a", "aac", "-b:a", "192k", "-frames:v", str(total), "-movflags", "+faststart", SAIDA], check=True)
 shutil.rmtree(TRECHOS)
