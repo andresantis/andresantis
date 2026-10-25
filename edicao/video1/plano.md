@@ -132,3 +132,15 @@ Telas cheias na versão completa: 6, nos tempos 25,4 · 100,7 · 108,8 · 129,9 
 1. Vou transcrever **o vídeo montado** e comparar com o texto esperado, para garantir que nenhum corte comeu uma palavra.
 2. Vou comparar as cores de quadros do vídeo original com as do vídeo montado nos mesmos pontos (em áreas sem nada por cima) e anotar a diferença medida.
 3. Vou abrir as duas versões no Remotion Studio para você revisar.
+
+---
+
+## O que mudou na montagem (etapa 3)
+
+- **Repetição "ele é extremamente técnico" (80 s): NÃO cortada.** As transcrições com tempo preciso mostram que ela não existe: a fala é "Porque ele é extremamente… [pausa] …técnico, ele tem alta qualidade". Cortei só a pausa.
+- **"ou" (47 s) e "aí" (177 s): não cortados no áudio.** Eles saem colados na palavra seguinte, sem silêncio para cortar sem estragar a fala. O "ou" foi tirado só da legenda.
+- **"Bom, e o" antes de "Grok": cortado** (o "Bom" sozinho não tem silêncio em volta). A frase passa a ser "Grok, ele já é integrado com o X".
+- **Volume: mantido como o original (−16 LUFS).** O pico já encosta no máximo (+0,3 dBFS); subir para −14 LUFS distorceria.
+- **Pausas:** 63 pausas, somando 34,4 s, detectadas com os sons agudos incluídos (para não cortar o "s" no fim das palavras).
+- **Duração final:** curta com 44,3 s; completa com 2 min 20,5 s.
+- **Cor:** o vídeo nunca passa pelo navegador. O Remotion desenha só as camadas transparentes (legendas e ilustrações), e o ffmpeg corta o original e cola as camadas por cima (`edicao/scripts/exporta.py`). A conferência (`edicao/scripts/confere_cor.py`) mede um viés de 0,00 a 0,06 nível (de 0 a 255) nas áreas sem nada por cima, que é só o ruído da compressão.
