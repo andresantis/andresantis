@@ -125,7 +125,7 @@ Elas aparecem de duas formas.
 - **Rótulos pequenos** (como "• faturamento em R$" e "• pra galera"): Geist Medium 500, −1% (o estilo "Apoio").
 - **Texto de botões e chips:** Geist Semibold 600, −1% a −3%.
 - Tudo em **minúsculas**, menos "IA", "R$" e o começo de "Por que não você?".
-- *Na referência, a medição apontou a Inter Display (Semibold −3% na legenda e Bold/ExtraBold −6% a −8% na palavra grande). Trocamos pela Geist, mantendo tamanho e espaçamento.*
+- *Na referência, a medição apontou a Inter Display (Semibold −3% na legenda e Bold/ExtraBold −6% a −8% na palavra grande). Trocamos pela Geist: os tamanhos continuam os da referência e o espaçamento segue a marca.*
 
 ### Cores das legendas
 
