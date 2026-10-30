@@ -2,6 +2,7 @@ import { Composition } from "remotion";
 import { FORMATO_VERTICAL } from "./formato";
 import { Teste } from "./Teste";
 import { duracaoVideo1, Video1 } from "./video1/Video1";
+import { duracaoVideo2, Video2 } from "./video2/Video2";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -24,6 +25,13 @@ export const RemotionRoot: React.FC = () => {
         component={Video1}
         durationInFrames={duracaoVideo1("completa")}
         defaultProps={{ versao: "completa" as const }}
+        {...FORMATO_VERTICAL}
+      />
+      <Composition
+        id="Video2"
+        component={Video2}
+        durationInFrames={duracaoVideo2()}
+        defaultProps={{ modo: "previa" as const }}
         {...FORMATO_VERTICAL}
       />
     </>

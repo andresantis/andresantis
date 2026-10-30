@@ -11,14 +11,14 @@ export const CENTRO_X = 480;
 const LARG = 840;
 
 const sai = Easing.out(Easing.cubic);
-const cresce = (f: number, desde: number, dur = 4) =>
+export const cresce = (f: number, desde: number, dur = 4) =>
   interpolate(f, [desde, desde + dur], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: sai });
-const chega = (f: number, desde: number) => interpolateColors(f - desde, [0, 2], [E.textoApoio, E.texto]);
+export const chega = (f: number, desde: number) => interpolateColors(f - desde, [0, 2], [E.textoApoio, E.texto]);
 
 const base: React.CSSProperties = { position: "absolute", fontFamily: FONTE };
 
 // Alças de seleção de programa de design (4 quadradinhos nos cantos + contorno).
-const Alcas: React.FC<{ cor: string }> = ({ cor }) => {
+export const Alcas: React.FC<{ cor: string }> = ({ cor }) => {
   const q = (s: React.CSSProperties) => (
     <div style={{ position: "absolute", width: 14, height: 14, background: "#fff", border: `2px solid ${cor}`, ...s }} />
   );
@@ -39,19 +39,28 @@ export const PalavraGrande: React.FC<{
   sublinhado?: number;
   risco?: number;
   contador?: boolean;
-}> = ({ texto, desde, sublinhado, risco, contador }) => {
+  // centro: palavra centralizada (rosto no meio do quadro); sombra: para fundos mistos, claro e escuro.
+  centro?: boolean;
+  sombra?: boolean;
+  // topo: posição vertical (px); area: [x, largura] quando algo ocupa parte do topo.
+  topo?: number;
+  area?: [number, number];
+}> = ({ texto, desde, sublinhado, risco, contador, centro, sombra, topo = 470, area = [60, LARG] }) => {
   const f = useCurrentFrame();
-  const tamanho = Math.min(242, (LARG / (texto.length * 0.52)));
+  const tamanho = Math.min(242, (area[1] / (texto.length * 0.52)));
   let mostrado = texto;
   let desfoque = 0;
   if (contador) {
-    const n = Math.round(interpolate(f, [desde, desde + 6], [1, Number(texto)], { extrapolateRight: "clamp" }));
-    mostrado = String(n);
+    // "5" conta de 1 a 5; "90%" conta de 0 a 90 e mantém o "%".
+    const alvo = parseInt(texto, 10);
+    const sufixo = texto.slice(String(alvo).length);
+    const n = Math.round(interpolate(f, [desde, desde + 6], [alvo > 10 ? 0 : 1, alvo], { extrapolateRight: "clamp" }));
+    mostrado = String(n) + sufixo;
     desfoque = f < desde + 6 ? 6 : 0;
   }
   const largura = mostrado.length * tamanho * 0.52;
   return (
-    <div style={{ ...base, left: 60, width: LARG, top: 470, textAlign: texto.length <= 3 ? "center" : "left" }}>
+    <div style={{ ...base, left: area[0], width: area[1], top: topo, textAlign: centro || texto.length <= 3 ? "center" : "left" }}>
       <div
         style={{
           display: "inline-block",
@@ -62,6 +71,7 @@ export const PalavraGrande: React.FC<{
           lineHeight: 1,
           color: chega(f, desde),
           filter: desfoque ? `blur(${desfoque}px)` : undefined,
+          textShadow: sombra ? "0 6px 32px rgba(0,0,0,0.55)" : undefined,
         }}
       >
         {mostrado}
@@ -150,7 +160,7 @@ export const Chaves: React.FC<{
 };
 
 // ---------- Cartão de superfície ----------
-const Cartao: React.FC<{ y: number; desde: number; children: React.ReactNode; largura?: number }> = ({
+export const Cartao: React.FC<{ y: number; desde: number; children: React.ReactNode; largura?: number }> = ({
   y, desde, children, largura = 760,
 }) => {
   const f = useCurrentFrame();
@@ -164,7 +174,7 @@ const Cartao: React.FC<{ y: number; desde: number; children: React.ReactNode; la
   );
 };
 
-const Selo: React.FC<{ texto: string; style?: React.CSSProperties }> = ({ texto, style }) => (
+export const Selo: React.FC<{ texto: string; style?: React.CSSProperties }> = ({ texto, style }) => (
   <span style={{ display: "inline-block", background: E.verde, color: PRETO, fontWeight: 600, fontSize: 30,
     letterSpacing: "-0.01em", padding: "8px 18px", borderRadius: 999, ...style }}>{texto}</span>
 );
