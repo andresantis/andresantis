@@ -40,7 +40,7 @@ export const roteiroVideo2 = (p: Palavra[], fimDoPost: number): Roteiro => {
       de: a("são"), ate: a("pensa"), esconde: true,
       el: (
         <ContadorTela desde={a("são")} rotulo="movimentados por agentes de IA" prefixo="US$" sufixo="trilhões"
-          degraus={[[5, a("15", 1, -0.25)], [10, a("15")], [15, a("trilhões")]]} />
+          degraus={[[5, a("são", 1, 0.35)], [10, a("15")], [15, a("trilhões")]]} />
       ),
     },
     { de: a("abrir"), ate: a("ele"), el: <Navegador desde={a("abrir")} abas={[a("abrir"), a("abas")]} risco={a("ou", 3)} /> },
