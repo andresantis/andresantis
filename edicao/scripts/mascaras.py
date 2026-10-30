@@ -1,7 +1,8 @@
-"""Gera a máscara da pessoa (MODNet) para cada quadro usado nas versões editadas do vídeo 1.
+"""Gera a máscara da pessoa (MODNet) para cada quadro usado nas versões editadas de um vídeo.
 
 A máscara só define onde fica a pessoa; os pixels do vídeo nunca são alterados.
-Uso: python3 mascaras.py <modelo.onnx> [limite_de_quadros]
+Uso: python3 mascaras.py <video> <modelo.onnx> [limite_de_quadros]   (ex.: video2 modnet.onnx)
+Saída: public/editar/mascaras/ (video1) ou public/editar/mascaras-<video>/ (demais vídeos).
 """
 import json, os, subprocess, sys
 import numpy as np
@@ -9,24 +10,26 @@ import onnxruntime as ort
 from PIL import Image
 
 BASE = "/home/user/andresantis/"
-SAIDA = BASE + "public/editar/mascaras/"
+VIDEO = sys.argv[1]
+SAIDA = BASE + ("public/editar/mascaras/" if VIDEO == "video1" else f"public/editar/mascaras-{VIDEO}/")
 W, H = 1080, 1920
 ALT_MODELO = 512
 ALT_MASCARA = 480
 
 os.makedirs(SAIDA, exist_ok=True)
 quadros = set()
-for v in ("curta", "completa"):
-    for a, b in json.load(open(BASE + f"edicao/video1/linha-{v}.json"))["trechos"]:
-        quadros.update(range(a, b))
+for arq in os.listdir(BASE + f"edicao/{VIDEO}/"):
+    if arq.startswith("linha-") and arq.endswith(".json"):
+        for a, b in json.load(open(BASE + f"edicao/{VIDEO}/{arq}"))["trechos"]:
+            quadros.update(range(a, b))
 quadros = sorted(q for q in quadros if not os.path.exists(SAIDA + f"{q:05d}.png"))
-if len(sys.argv) > 2: quadros = quadros[: int(sys.argv[2])]
+if len(sys.argv) > 3: quadros = quadros[: int(sys.argv[3])]
 print(len(quadros), "quadros para processar", flush=True)
 
-sess = ort.InferenceSession(sys.argv[1])
+sess = ort.InferenceSession(sys.argv[2])
 nome = sess.get_inputs()[0].name
 lm = int(W * ALT_MODELO / H) // 32 * 32
-proc = subprocess.Popen(["ffmpeg", "-v", "error", "-i", BASE + "public/editar/video1.mp4", "-vf", f"scale={lm}:{ALT_MODELO}",
+proc = subprocess.Popen(["ffmpeg", "-v", "error", "-i", BASE + f"public/editar/{VIDEO}.mp4", "-vf", f"scale={lm}:{ALT_MODELO}",
                          "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
 alvo = set(quadros); n = 0; i = 0
 while alvo:

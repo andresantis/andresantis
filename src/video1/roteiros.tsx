@@ -10,7 +10,10 @@ export type Item = {
   de: number;
   ate: number;
   el?: React.ReactNode;
-  grande?: { texto: string; sublinhado?: number; risco?: number; contador?: boolean };
+  grande?: {
+    texto: string; sublinhado?: number; risco?: number; contador?: boolean; centro?: boolean; sombra?: boolean;
+    topo?: number; area?: [number, number];
+  };
   esconde?: boolean;
 };
 export type Roteiro = { itens: Item[]; chamada: number; inicioCapitulos: number };

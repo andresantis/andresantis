@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import {
   AbsoluteFill,
   continueRender,
@@ -10,14 +10,21 @@ import {
   useCurrentFrame,
 } from "remotion";
 
-// O vídeo original entra sem filtro, LUT ou correção: só cortes e zoom (escala).
-const VIDEO = staticFile("editar/video1.mp4");
+// O vídeo original entra sem filtro, LUT ou correção: só cortes e, se ligado, zoom (escala).
+// Qual vídeo, quais máscaras e se há zoom vêm deste contexto (o padrão é o vídeo 1).
+export type FonteDoVideo = { video: string; mascaras: string; mascarasInv: string; zoom: boolean };
+export const FonteVideo = createContext<FonteDoVideo>({
+  video: "editar/video1.mp4",
+  mascaras: "editar/mascaras",
+  mascarasInv: "editar/mascaras-inv",
+  zoom: true,
+});
 const ZOOM_FECHADO = 1.1;
 const ORIGEM_ZOOM = "480px 760px"; // perto do rosto
 
 type Trecho = [number, number]; // [quadro inicial, quadro final) no original
 
-export const zoomDo = (i: number) => (i % 2 ? ZOOM_FECHADO : 1);
+export const zoomDo = (i: number, comZoom = true) => (comZoom && i % 2 ? ZOOM_FECHADO : 1);
 
 const Quadro: React.FC<{
   inicio: number;
@@ -29,7 +36,7 @@ const Quadro: React.FC<{
 }> = ({ inicio, fim, zoom, mudo, volume, estilo }) => (
   <AbsoluteFill style={{ transform: `scale(${zoom})`, transformOrigin: ORIGEM_ZOOM, ...estilo }}>
     <OffthreadVideo
-      src={VIDEO}
+      src={staticFile(useContext(FonteVideo).video)}
       startFrom={inicio}
       endAt={fim}
       muted={mudo}
@@ -44,7 +51,7 @@ const Quadro: React.FC<{
 const Pessoa: React.FC<{ trecho: Trecho; zoom: number }> = ({ trecho, zoom }) => {
   const frame = useCurrentFrame();
   const quadroOriginal = trecho[0] + frame;
-  const url = staticFile(`editar/mascaras/${String(quadroOriginal).padStart(5, "0")}.png`);
+  const url = staticFile(`${useContext(FonteVideo).mascaras}/${String(quadroOriginal).padStart(5, "0")}.png`);
   return <PessoaComMascara key={url} url={url} trecho={trecho} zoom={zoom} />;
 };
 
@@ -73,16 +80,19 @@ const PessoaComMascara: React.FC<{ url: string; trecho: Trecho; zoom: number }> 
 };
 
 // 1 quadro de "glitch": a faixa de cima da imagem repetida 4 vezes (estilo.md, seção 3).
-const Glitch: React.FC<{ trecho: Trecho }> = ({ trecho }) => (
-  <AbsoluteFill>
-    {[0, 1, 2, 3].map((k) => (
-      <div key={k} style={{ position: "absolute", top: k * 480, left: 0, width: 1080, height: 480, overflow: "hidden" }}>
-        <OffthreadVideo src={VIDEO} startFrom={trecho[0]} endAt={trecho[1]} muted toneMapped={false}
-          style={{ width: 1080, height: 1920, transform: "translateY(-320px)" }} />
-      </div>
-    ))}
-  </AbsoluteFill>
-);
+const Glitch: React.FC<{ trecho: Trecho }> = ({ trecho }) => {
+  const video = staticFile(useContext(FonteVideo).video);
+  return (
+    <AbsoluteFill>
+      {[0, 1, 2, 3].map((k) => (
+        <div key={k} style={{ position: "absolute", top: k * 480, left: 0, width: 1080, height: 480, overflow: "hidden" }}>
+          <OffthreadVideo src={video} startFrom={trecho[0]} endAt={trecho[1]} muted toneMapped={false}
+            style={{ width: 1080, height: 1920, transform: "translateY(-320px)" }} />
+        </div>
+      ))}
+    </AbsoluteFill>
+  );
+};
 
 export const Camera: React.FC<{
   trechos: Trecho[];
@@ -92,6 +102,7 @@ export const Camera: React.FC<{
   glitch: number[];
 }> = ({ trechos, volume, palavraAtiva, palavra, glitch }) => {
   const frame = useCurrentFrame();
+  const comZoom = useContext(FonteVideo).zoom;
   let ini = 0;
   const inicios = trechos.map(([a, b]) => {
     const s = ini;
@@ -105,7 +116,7 @@ export const Camera: React.FC<{
       <Series>
         {trechos.map(([a, b], k) => (
           <Series.Sequence key={k} durationInFrames={b - a}>
-            <Quadro inicio={a} fim={b} zoom={zoomDo(k)} volume={volume} />
+            <Quadro inicio={a} fim={b} zoom={zoomDo(k, comZoom)} volume={volume} />
           </Series.Sequence>
         ))}
       </Series>
@@ -116,7 +127,7 @@ export const Camera: React.FC<{
             <Series>
               {trechos.map(([a, b], k) => (
                 <Series.Sequence key={k} durationInFrames={b - a}>
-                  {k === i ? <Pessoa trecho={[a, b]} zoom={zoomDo(k)} /> : null}
+                  {k === i ? <Pessoa trecho={[a, b]} zoom={zoomDo(k, comZoom)} /> : null}
                 </Series.Sequence>
               ))}
             </Series>
@@ -129,11 +140,11 @@ export const Camera: React.FC<{
 };
 
 // Onde cada quadro do vídeo editado está no original (trecho, quadro original e zoom).
-export const posicaoNoOriginal = (trechos: Trecho[], frame: number) => {
+export const posicaoNoOriginal = (trechos: Trecho[], frame: number, comZoom = true) => {
   let ini = 0;
   for (let k = 0; k < trechos.length; k++) {
     const [a, b] = trechos[k];
-    if (frame < ini + b - a) return { k, quadro: a + frame - ini, zoom: zoomDo(k) };
+    if (frame < ini + b - a) return { k, quadro: a + frame - ini, zoom: zoomDo(k, comZoom) };
     ini += b - a;
   }
   return null;
@@ -155,9 +166,10 @@ export const QuadrosGlitch: React.FC<{ trechos: Trecho[]; glitch: number[] }> = 
 // Modo "camadas": a palavra grande recortada onde a pessoa está (máscara invertida, com o mesmo zoom do trecho).
 export const PalavraAtrasDaPessoa: React.FC<{ trechos: Trecho[]; children: React.ReactNode }> = ({ trechos, children }) => {
   const frame = useCurrentFrame();
-  const pos = posicaoNoOriginal(trechos, frame);
+  const fonte = useContext(FonteVideo);
+  const pos = posicaoNoOriginal(trechos, frame, fonte.zoom);
   if (!pos) return <>{children}</>;
-  const url = staticFile(`editar/mascaras-inv/${String(pos.quadro).padStart(5, "0")}.png`);
+  const url = staticFile(`${fonte.mascarasInv}/${String(pos.quadro).padStart(5, "0")}.png`);
   return <MascaraInvertida key={url} url={url} zoom={pos.zoom}>{children}</MascaraInvertida>;
 };
 
