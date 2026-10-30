@@ -10,9 +10,9 @@ Versão única: **completa, 57,5 s**, com só as 20 pausas cortadas (etapa 1 apr
 - **Enquadramento:** o rosto fica no centro e próximo (o topo da cabeça está a y ≈ 620). O peito (blusa cinza clara) vai de y ≈ 1100 a 1470.
 - **Fundo atrás da legenda é misto:** forro escuro à esquerda e céu claro (teto solar) à direita. Proposta: a **legenda vai sobre uma faixa da cor de Superfície da marca** (`#161618`, cantos arredondados), com texto `#F5F5F7`. Assim ela fica legível nos dois fundos. A palavra grande atrás da cabeça leva uma **sombra suave escura**, pelo mesmo motivo. Nada disso muda a cor do vídeo, porque são camadas por cima.
 - **Card do post gravado no vídeo** (canto superior esquerdo, de 0,3 s a ~6,2 s): enquanto ele aparece, a legenda vai para **o lado direito** (x 440–900, até 2 linhas), para não cobrir o post que você aponta.
-- **Correções só na legenda** (aprovadas): "agentes de IA", "as IAs", "inteligências artificiais".
+- **Correções só na legenda** (aprovadas): "agentes de IA", "as IAs", "inteligências artificiais" e "**e a IA** vai responder" (confirmado pelo André).
 - **Sem dados inventados:** só entram os números que você fala (2028, 90%, 9 em cada 10, 15 trilhões, 10 abas, duas ou três empresas). Os cards de resposta usam "empresa A / B / C".
-- **Cortes:** secos, com o zoom alternado de 100% e 110% (como no vídeo 1) e 1 quadro de "glitch" no corte de ~2,5 s.
+- **Cortes:** secos, **sem zoom** (o vídeo fica no enquadramento normal, a pedido do André), e com 1 quadro de "glitch" no corte de ~2,5 s.
 - **Som:** só a sua voz, com o volume original. Na chamada final entram o efeito de subida e a musiquinha (os mesmos do vídeo 1).
 
 ---
