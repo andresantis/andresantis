@@ -120,6 +120,10 @@ const ADESIVOS = {
     { id: 'adesivo-completo-horizontal-preto', nome: 'Retangular preto', w: 110, h: 45, r: 9, fundo: C.preto, cor: C.claro, versao: 'completo', larg: 92 },
     { id: 'adesivo-completo-vertical-verde', nome: 'Vertical verde', w: 70, h: 80, r: 9, fundo: C.verde, cor: C.preto, versao: 'completoVertical', larg: 52 },
   ],
+  logoNome: [
+    { id: 'adesivo-logo-nome-horizontal-preto', nome: 'Retangular preto', w: 100, h: 38, r: 9, fundo: C.preto, cor: C.claro, versao: 'logoNome', larg: 80 },
+    { id: 'adesivo-logo-nome-vertical-verde', nome: 'Vertical verde', w: 60, h: 65, r: 9, fundo: C.verde, cor: C.preto, versao: 'logoNomeVertical', larg: 44 },
+  ],
 };
 function adesivoArte(a, { corte = true, sangria = 2 } = {}) {
   const s = sangria, W = a.w + 2 * s, H = a.h + 2 * s;
@@ -147,12 +151,13 @@ function adesivosCena(tipo) { // 3,4 px/mm
 }
 
 // ---------- especificações por modelo ----------
-const PASTA = { logo: 'logo', nome: 'nome', completo: 'logo-nome-slogan-horizontal', completoVertical: 'logo-nome-slogan-vertical' };
-const DESC_V = { logo: 'Ícone', nome: 'Nome Promptado', completo: 'Logo, nome e slogan horizontal', completoVertical: 'Logo, nome e slogan vertical' };
+const PASTA = { logo: 'logo', nome: 'nome', completo: 'logo-nome-slogan-horizontal', completoVertical: 'logo-nome-slogan-vertical', logoNome: 'logo-nome-horizontal', logoNomeVertical: 'logo-nome-vertical' };
+const DESC_V = { logo: 'Ícone', nome: 'Nome Promptado', completo: 'Logo, nome e slogan horizontal', completoVertical: 'Logo, nome e slogan vertical', logoNome: 'Logo e nome horizontal', logoNomeVertical: 'Logo e nome vertical' };
 const MODELOS = {
   logo: { sub: 'Modelo 1 · Logo', capa: ['logo', 150], arquivo: 'brindes-promptado-1-logo' },
   nome: { sub: 'Modelo 2 · Nome', capa: ['nome', 420], arquivo: 'brindes-promptado-2-nome' },
   completo: { sub: 'Modelo 3 · Logo, nome e slogan', capa: ['completoVertical', 300], arquivo: 'brindes-promptado-3-logo-nome-slogan' },
+  logoNome: { sub: 'Modelo 4 · Logo e nome', capa: ['logoNomeVertical', 260], arquivo: 'brindes-promptado-4-logo-nome' },
 };
 // Aplicação: versão, posição no desenho, tamanho em px e o texto do tamanho real.
 // Escalas: camiseta/polo 4,6 px/cm · moletom 4,2 · boné 12 · caderno 14 · caneta 30.
@@ -184,6 +189,15 @@ const APLIC = {
     camiseta: A('completo', 200, 155, { largura: 110 }, '24 cm de largura'),
     polo: A('completo', 262, 140, { largura: 55 }, '12 cm de largura'),
     bone: A('completo', 200, 150, { largura: 132 }, '11 cm de largura'),
+  },
+  logoNome: {
+    caderno: A('logoNomeVertical', 155, 192, { largura: 112 }, '8 cm de largura'),
+    caneta: A('logoNome', 385, 85, { largura: 114 }, '3,8 cm de largura'),
+    moletomF: A('logoNome', 258, 150, { largura: 38 }, '9 cm de largura'),
+    moletomC: A('logoNomeVertical', 200, 230, { largura: 109 }, '26 cm de largura'),
+    camiseta: A('logoNome', 200, 155, { largura: 110 }, '24 cm de largura'),
+    polo: A('logoNome', 260, 140, { largura: 41 }, '9 cm de largura'),
+    bone: A('logoNome', 200, 150, { largura: 132 }, '11 cm de largura'),
   },
 };
 const arqDe = (a, cor) => `<code>${PASTA[a.versao]}/svg/…-${cor}.svg</code>`;
@@ -272,7 +286,7 @@ function catalogo(tipo) {
       <li><span>1</span><div><b>Use sempre os arquivos em vetor (SVG ou PDF).</b><p>Estão em <code>arquivos/</code> (logos) e <code>brindes/adesivos/</code> (adesivos com corte). PNG só para visualização.</p></div></li>
       <li><span>2</span><div><b>Peça prova ou amostra de cada peça.</b><p>Principalmente do verde (boné e adesivos) e dos bordados pequenos.</p></div></li>
       <li><span>3</span><div><b>O logo nunca muda de cor fora do previsto.</b><p>Claro sobre preto, grafite sobre branco, preto sobre verde. Nunca verde.</p></div></li>
-      <li><span>4</span><div><b>Respeite a área de proteção e os tamanhos mínimos do manual.</b><p>Ícone: 8 mm de altura. Nome: 2,5 cm de largura. Logo, nome e slogan: 5 cm (horizontal) ou 3 cm (vertical) de largura. Abaixo disso, use o ícone ou o nome.</p></div></li>
+      <li><span>4</span><div><b>Respeite a área de proteção e os tamanhos mínimos do manual.</b><p>Ícone: 8 mm de altura. Nome: 2,5 cm de largura. Logo e nome: 3 cm (horizontal) ou 2 cm (vertical) de largura. Logo, nome e slogan: 5 cm (horizontal) ou 3 cm (vertical) de largura. Abaixo disso, use o ícone ou o nome.</p></div></li>
     </ol>
     <p class="nota">Os desenhos das peças são ilustrativos. Tamanhos e posições valem para a grade M; ajuste proporcionalmente nas outras grades.</p></div>`,
   { num: String(lista.length + 3).padStart(2, '0'), titulo: 'Antes de produzir' }));

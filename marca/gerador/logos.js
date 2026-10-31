@@ -90,6 +90,20 @@ VERSOES.completoVertical = (() => {
     corpo: cor => icone(cor, (w - IW) / 2) + bl.corpo(cor, (w - bl.w) / 2, y0) };
 })();
 
+// Logo + nome, sem slogan.
+VERSOES.logoNome = (() => {
+  const sN = 220, tx = IW + X_UNID * 0.75;
+  const base = CORPO_H / 2 + CAP * sN / 2;
+  return { nome: 'Logo e nome (horizontal)', w: tx + larguraDe(NOME, sN), h: Math.max(IH, base + DESC * sN),
+    corpo: cor => icone(cor) + texto(NOME, cor, tx, base, sN) };
+})();
+VERSOES.logoNomeVertical = (() => {
+  const sN = 130, wN = larguraDe(NOME, sN), w = Math.max(IW, wN);
+  const base = IH + X_UNID * 0.6 + CAP * sN;
+  return { nome: 'Logo e nome (vertical)', w, h: base + DESC * sN,
+    corpo: cor => icone(cor, (w - IW) / 2) + texto(NOME, cor, (w - wN) / 2, base, sN) };
+})();
+
 function svg(versao, cor, { pad = 0, largura } = {}) {
   const v = VERSOES[versao];
   const W = v.w + pad * 2, H = v.h + pad * 2;
