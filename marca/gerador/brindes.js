@@ -112,9 +112,13 @@ const ADESIVOS = {
     { id: 'adesivo-logo-circulo-verde', nome: 'Redondo verde', w: 50, h: 50, r: 25, fundo: C.verde, cor: C.preto, versao: 'logo', alt: 28 },
     { id: 'adesivo-logo-quadrado-preto', nome: 'Quadrado preto', w: 50, h: 50, r: 9, fundo: C.preto, cor: C.claro, versao: 'logo', alt: 28 },
   ],
-  slogan: [
-    { id: 'adesivo-slogan-horizontal-preto', nome: 'Retangular preto', w: 100, h: 40, r: 9, fundo: C.preto, cor: C.claro, versao: 'horizontal', larg: 78 },
-    { id: 'adesivo-slogan-vertical-verde', nome: 'Vertical verde', w: 60, h: 72, r: 9, fundo: C.verde, cor: C.preto, versao: 'vertical', larg: 40 },
+  nome: [
+    { id: 'adesivo-nome-preto', nome: 'Retangular preto', w: 90, h: 35, r: 9, fundo: C.preto, cor: C.claro, versao: 'nome', larg: 66 },
+    { id: 'adesivo-nome-verde', nome: 'Retangular verde', w: 90, h: 35, r: 9, fundo: C.verde, cor: C.preto, versao: 'nome', larg: 66 },
+  ],
+  completo: [
+    { id: 'adesivo-completo-horizontal-preto', nome: 'Retangular preto', w: 110, h: 45, r: 9, fundo: C.preto, cor: C.claro, versao: 'completo', larg: 92 },
+    { id: 'adesivo-completo-vertical-verde', nome: 'Vertical verde', w: 70, h: 80, r: 9, fundo: C.verde, cor: C.preto, versao: 'completoVertical', larg: 52 },
   ],
 };
 function adesivoArte(a, { corte = true, sangria = 2 } = {}) {
@@ -143,10 +147,51 @@ function adesivosCena(tipo) { // 3,4 px/mm
 }
 
 // ---------- especificações por modelo ----------
+const PASTA = { logo: 'logo', nome: 'nome', completo: 'logo-nome-slogan-horizontal', completoVertical: 'logo-nome-slogan-vertical' };
+const DESC_V = { logo: 'Ícone', nome: 'Nome Promptado', completo: 'Logo, nome e slogan horizontal', completoVertical: 'Logo, nome e slogan vertical' };
+const MODELOS = {
+  logo: { sub: 'Modelo 1 · Logo', capa: ['logo', 150], arquivo: 'brindes-promptado-1-logo' },
+  nome: { sub: 'Modelo 2 · Nome', capa: ['nome', 420], arquivo: 'brindes-promptado-2-nome' },
+  completo: { sub: 'Modelo 3 · Logo, nome e slogan', capa: ['completoVertical', 300], arquivo: 'brindes-promptado-3-logo-nome-slogan' },
+};
+// Aplicação: versão, posição no desenho, tamanho em px e o texto do tamanho real.
 // Escalas: camiseta/polo 4,6 px/cm · moletom 4,2 · boné 12 · caderno 14 · caneta 30.
+const A = (versao, cx, cy, tam, txt) => ({ versao, cx, cy, tam, txt });
+const APLIC = {
+  logo: {
+    caderno: A('logo', 155, 197, { altura: 70 }, '5 cm de altura'),
+    caneta: A('logo', 410, 85, { altura: 22 }, '8 mm de altura'),
+    moletomF: A('logo', 255, 150, { altura: 29 }, '7 cm de altura'),
+    moletomC: A('logo', 200, 230, { altura: 105 }, '25 cm de altura'),
+    camiseta: A('logo', 200, 160, { altura: 46 }, '10 cm de altura'),
+    polo: A('logo', 255, 140, { altura: 23 }, '5 cm de altura'),
+    bone: A('logo', 200, 150, { altura: 66 }, '5,5 cm de altura'),
+  },
+  nome: {
+    caderno: A('nome', 155, 197, { largura: 126 }, '9 cm de largura'),
+    caneta: A('nome', 380, 85, { largura: 135 }, '4,5 cm de largura'),
+    moletomF: A('nome', 258, 150, { largura: 38 }, '9 cm de largura'),
+    moletomC: A('nome', 200, 220, { largura: 126 }, '30 cm de largura'),
+    camiseta: A('nome', 200, 155, { largura: 110 }, '24 cm de largura'),
+    polo: A('nome', 258, 140, { largura: 41 }, '9 cm de largura'),
+    bone: A('nome', 200, 150, { largura: 132 }, '11 cm de largura'),
+  },
+  completo: {
+    caderno: A('completoVertical', 155, 190, { largura: 112 }, '8 cm de largura'),
+    caneta: A('nome', 380, 85, { largura: 135 }, '4,5 cm de largura'),
+    moletomF: A('logo', 255, 150, { altura: 29 }, '7 cm de altura'),
+    moletomC: A('completoVertical', 200, 235, { largura: 109 }, '26 cm de largura'),
+    camiseta: A('completo', 200, 155, { largura: 110 }, '24 cm de largura'),
+    polo: A('completo', 262, 140, { largura: 55 }, '12 cm de largura'),
+    bone: A('completo', 200, 150, { largura: 132 }, '11 cm de largura'),
+  },
+};
+const arqDe = (a, cor) => `<code>${PASTA[a.versao]}/svg/…-${cor}.svg</code>`;
+const aplicar = (a, cor) => logoEm(a.versao, cor, a.cx, a.cy, a.tam);
+
 function itens(tipo) {
-  const L = tipo === 'logo';
-  const arq = v => ({ logo: 'logo/', horizontal: 'logo-slogan-horizontal/', vertical: 'logo-slogan-vertical/' }[v]);
+  const ap = APLIC[tipo];
+  const C3 = tipo === 'completo';
   return [
     {
       nome: 'Adesivos', desenho: [adesivosCena(tipo)],
@@ -156,48 +201,40 @@ function itens(tipo) {
       nota: 'A linha de corte está numa camada separada chamada CutContour, em magenta. A sangria de 2 mm já está no arquivo.',
     },
     {
-      nome: 'Caderno', desenho: [caderno(L ? logoEm('logo', C.claro, 155, 197, { altura: 70 }) : logoEm('vertical', C.claro, 155, 190, { largura: 112 }))],
-      specs: [['Modelo', 'A5 (14,8 × 21 cm), capa dura preta, elástico preto'], ['Aplicação', L ? 'Ícone, centro da capa' : 'Logo e slogan vertical, centro da capa'],
-        ['Tamanho', L ? '5 cm de altura' : '8 cm de largura'], ['Cor', 'Claro #F5F5F7 (branco gelo)'], ['Técnica', 'Hot stamping branco ou serigrafia'],
-        ['Arquivo', `<code>${arq(L ? 'logo' : 'vertical')}svg/…-claro.svg</code>`]],
+      nome: 'Caderno', desenho: [caderno(aplicar(ap.caderno, C.claro))],
+      specs: [['Modelo', 'A5 (14,8 × 21 cm), capa dura preta, elástico preto'], ['Aplicação', `${DESC_V[ap.caderno.versao]}, centro da capa`],
+        ['Tamanho', ap.caderno.txt], ['Cor', 'Claro #F5F5F7 (branco gelo)'], ['Técnica', 'Hot stamping branco ou serigrafia'], ['Arquivo', arqDe(ap.caderno, 'claro')]],
     },
     {
-      nome: 'Caneta', desenho: [caneta(logoEm('logo', C.claro, 410, 85, { altura: 22 }))],
-      specs: [['Modelo', 'Corpo preto fosco, clipe metálico'], ['Aplicação', 'Ícone na lateral do corpo, perto da tampa'], ['Tamanho', '8 mm de altura'],
-        ['Cor', 'Claro #F5F5F7'], ['Técnica', 'Tampografia branca ou gravação a laser'], ['Arquivo', `<code>logo/svg/promptado-logo-claro.svg</code>`]],
-      nota: L ? '' : 'A caneta usa só o ícone também neste modelo: o corpo tem cerca de 1 cm de altura e o logo com slogan precisa de 4 cm de largura para ser lido (regra de tamanho mínimo do manual).',
+      nome: 'Caneta', desenho: [caneta(aplicar(ap.caneta, C.claro))],
+      specs: [['Modelo', 'Corpo preto fosco, clipe metálico'], ['Aplicação', `${DESC_V[ap.caneta.versao]} na lateral do corpo`], ['Tamanho', ap.caneta.txt],
+        ['Cor', 'Claro #F5F5F7'], ['Técnica', 'Tampografia branca ou gravação a laser'], ['Arquivo', arqDe(ap.caneta, 'claro')]],
+      nota: C3 ? 'A caneta leva só o nome neste modelo: o corpo tem cerca de 1 cm de altura e, nesse tamanho, o slogan ficaria ilegível.' : '',
     },
     {
-      nome: 'Moletom', desenho: L
-        ? [moletom('preto', logoEm('logo', C.claro, 255, 150, { altura: 29 })), moletom('preto', logoEm('logo', C.claro, 200, 230, { altura: 105 }), { costas: true })]
-        : [moletom('preto', logoEm('logo', C.claro, 255, 150, { altura: 29 })), moletom('preto', logoEm('vertical', C.claro, 200, 240, { largura: 109 }), { costas: true })],
+      nome: 'Moletom', desenho: [moletom('preto', aplicar(ap.moletomF, C.claro)), moletom('preto', aplicar(ap.moletomC, C.claro), { costas: true })],
       legendas: ['Frente', 'Costas'],
-      specs: [['Modelo', 'Moletom canguru com capuz, preto'], ['Frente', 'Ícone no peito esquerdo, 7 cm de altura, bordado'],
-        ['Costas', L ? 'Ícone grande, centralizado, 25 cm de altura, serigrafia' : 'Logo e slogan vertical, centralizado, 26 cm de largura, serigrafia'],
-        ['Cor', 'Claro #F5F5F7 (linha e tinta branco gelo)'], ['Arquivos', `<code>logo/</code>${L ? '' : ' e <code>logo-slogan-vertical/</code>'}, versão -claro`]],
+      specs: [['Modelo', 'Moletom canguru com capuz, preto'], ['Frente', `${DESC_V[ap.moletomF.versao]} no peito esquerdo, ${ap.moletomF.txt}, bordado`],
+        ['Costas', `${DESC_V[ap.moletomC.versao]}, centralizado, ${ap.moletomC.txt}, serigrafia`],
+        ['Cor', 'Claro #F5F5F7 (linha e tinta branco gelo)'], ['Arquivos', `${arqDe(ap.moletomF, 'claro')} e ${arqDe(ap.moletomC, 'claro')}`]],
     },
     {
-      nome: 'Camiseta', desenho: L
-        ? [camiseta('branco', logoEm('logo', C.texto, 200, 160, { altura: 46 }))]
-        : [camiseta('branco', logoEm('horizontal', C.texto, 200, 150, { largura: 110 }))],
-      specs: [['Modelo', 'Camiseta gola careca, branca, 100% algodão'], ['Aplicação', L ? 'Ícone, centro do peito' : 'Logo e slogan horizontal, centro do peito'],
-        ['Tamanho', L ? '10 cm de altura' : '24 cm de largura'], ['Cor', 'Grafite #1D1D1F'], ['Técnica', 'Serigrafia (silk) ou DTF'],
-        ['Arquivo', `<code>${arq(L ? 'logo' : 'horizontal')}svg/…-escuro.svg</code>`]],
+      nome: 'Camiseta', desenho: [camiseta('branco', aplicar(ap.camiseta, C.texto))],
+      specs: [['Modelo', 'Camiseta gola careca, branca, 100% algodão'], ['Aplicação', `${DESC_V[ap.camiseta.versao]}, centro do peito`],
+        ['Tamanho', ap.camiseta.txt], ['Cor', 'Grafite #1D1D1F'], ['Técnica', 'Serigrafia (silk) ou DTF'], ['Arquivo', arqDe(ap.camiseta, 'escuro')]],
     },
     {
-      nome: 'Camiseta polo', desenho: [polo('preto', L ? logoEm('logo', C.claro, 255, 140, { altura: 23 }) : logoEm('horizontal', C.claro, 262, 140, { largura: 46 }))],
-      specs: [['Modelo', 'Polo piquet, preta'], ['Aplicação', L ? 'Ícone no peito esquerdo' : 'Logo e slogan horizontal no peito esquerdo'],
-        ['Tamanho', L ? '5 cm de altura' : '10 cm de largura'], ['Cor', 'Claro #F5F5F7 (linha branco gelo)'], ['Técnica', 'Bordado'],
-        ['Arquivo', `<code>${arq(L ? 'logo' : 'horizontal')}svg/…-claro.svg</code>`]],
-      nota: L ? '' : 'Em 10 cm, as letras do slogan ficam com cerca de 5 mm. É o limite do bordado: peça uma amostra antes da produção.',
+      nome: 'Camiseta polo', desenho: [polo('preto', aplicar(ap.polo, C.claro))],
+      specs: [['Modelo', 'Polo piquet, preta'], ['Aplicação', `${DESC_V[ap.polo.versao]} no peito esquerdo`],
+        ['Tamanho', ap.polo.txt], ['Cor', 'Claro #F5F5F7 (linha branco gelo)'], ['Técnica', C3 ? 'DTF (transfer) de alta definição' : 'Bordado'], ['Arquivo', arqDe(ap.polo, 'claro')]],
+      nota: C3 ? 'Neste tamanho as letras do slogan ficam com cerca de 3,5 mm, pequenas demais para bordado. Por isso a técnica indicada é DTF.' : '',
     },
     {
-      nome: 'Boné', desenho: [bone('verde', L ? logoEm('logo', C.preto, 200, 150, { altura: 66 }) : logoEm('horizontal', C.preto, 200, 150, { largura: 120 }))],
-      specs: [['Modelo', 'Boné aba curva, 6 gomos, verde'], ['Aplicação', L ? 'Ícone na frente, centralizado' : 'Logo e slogan horizontal na frente, centralizado'],
-        ['Tamanho', L ? '5,5 cm de altura' : '10 cm de largura'], ['Cor', 'Preto #000000 (linha preta)'], ['Técnica', 'Bordado'],
-        ['Tecido', 'Verde o mais próximo possível de #22C55E. Peça a cartela ao fornecedor.'],
-        ['Arquivo', `<code>${arq(L ? 'logo' : 'horizontal')}svg/…-preto.svg</code>`]],
-      nota: 'Sobre o verde, o logo é sempre preto (regra da marca).',
+      nome: 'Boné', desenho: [bone('verde', aplicar(ap.bone, C.preto))],
+      specs: [['Modelo', 'Boné aba curva, 6 gomos, verde'], ['Aplicação', `${DESC_V[ap.bone.versao]} na frente, centralizado`],
+        ['Tamanho', ap.bone.txt], ['Cor', 'Preto #000000'], ['Técnica', C3 ? 'Patch emborrachado (silicone) ou DTF' : 'Bordado'],
+        ['Tecido', 'Verde o mais próximo possível de #22C55E. Peça a cartela ao fornecedor.'], ['Arquivo', arqDe(ap.bone, 'preto')]],
+      nota: 'Sobre o verde, a marca é sempre preta (regra da marca).' + (C3 ? ' O slogan fica pequeno demais para bordado, por isso o patch.' : ''),
     },
   ];
 }
@@ -211,12 +248,12 @@ const pagina = (conteudo, { escura = false, num, titulo } = {}) => `
 </section>`;
 
 function catalogo(tipo) {
-  const L = tipo === 'logo';
+  const M = MODELOS[tipo];
   const lista = itens(tipo);
   const pgs = [];
   pgs.push(pagina(`<div class="capa">
-      <div>${svg(L ? 'logo' : 'vertical', C.claro, { largura: L ? 150 : 300 })}</div>
-      <div><h1>Brindes</h1><p class="sub">${L ? 'Modelo 1 · Logo' : 'Modelo 2 · Logo e slogan'}</p>
+      <div>${svg(M.capa[0], C.claro, { largura: M.capa[1] })}</div>
+      <div><h1>Brindes</h1><p class="sub">${M.sub}</p>
       <p class="meta">Promptado · Especificações para produção · Outubro de 2026</p></div></div>`, { escura: true }));
   pgs.push(pagina(`<div class="visao">${lista.map((it, i) => `
       <figure><div class="mini">${it.desenho[0]}</div><figcaption><span>${String(i + 3).padStart(2, '0')}</span>${it.nome}</figcaption></figure>`).join('')}</div>`,
@@ -235,7 +272,7 @@ function catalogo(tipo) {
       <li><span>1</span><div><b>Use sempre os arquivos em vetor (SVG ou PDF).</b><p>Estão em <code>arquivos/</code> (logos) e <code>brindes/adesivos/</code> (adesivos com corte). PNG só para visualização.</p></div></li>
       <li><span>2</span><div><b>Peça prova ou amostra de cada peça.</b><p>Principalmente do verde (boné e adesivos) e dos bordados pequenos.</p></div></li>
       <li><span>3</span><div><b>O logo nunca muda de cor fora do previsto.</b><p>Claro sobre preto, grafite sobre branco, preto sobre verde. Nunca verde.</p></div></li>
-      <li><span>4</span><div><b>Respeite a área de proteção e os tamanhos mínimos do manual.</b><p>Logo e slogan juntos: mínimo de 4 cm de largura. Abaixo disso, só o ícone.</p></div></li>
+      <li><span>4</span><div><b>Respeite a área de proteção e os tamanhos mínimos do manual.</b><p>Ícone: 8 mm de altura. Nome: 2,5 cm de largura. Logo, nome e slogan: 5 cm (horizontal) ou 3 cm (vertical) de largura. Abaixo disso, use o ícone ou o nome.</p></div></li>
     </ol>
     <p class="nota">Os desenhos das peças são ilustrativos. Tamanhos e posições valem para a grade M; ajuste proporcionalmente nas outras grades.</p></div>`,
   { num: String(lista.length + 3).padStart(2, '0'), titulo: 'Antes de produzir' }));
@@ -287,13 +324,13 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:.88em;background:#fff;bo
   for (const f of ['svg', 'pdf']) fs.mkdirSync(path.join(dirAd, f), { recursive: true });
   const b = await chromium.launch();
   const p = await b.newPage();
-  for (const a of [...ADESIVOS.logo, ...ADESIVOS.slogan]) {
+  for (const a of Object.values(ADESIVOS).flat()) {
     const s = adesivoArte(a);
     fs.writeFileSync(path.join(dirAd, 'svg', a.id + '.svg'), s);
     await p.setContent(`<style>@page{margin:0}html,body{margin:0}svg{display:block}</style>${s}`);
     await p.pdf({ path: path.join(dirAd, 'pdf', a.id + '.pdf'), width: (a.w + 4) + 'mm', height: (a.h + 4) + 'mm', pageRanges: '1', printBackground: true });
   }
-  for (const [tipo, nome] of [['logo', 'brindes-promptado-logo'], ['slogan', 'brindes-promptado-logo-e-slogan']]) {
+  for (const [tipo, { arquivo: nome }] of Object.entries(MODELOS)) {
     const html = catalogo(tipo);
     await p.setViewportSize({ width: 1123, height: 794 });
     await p.setContent(html, { waitUntil: 'load' });

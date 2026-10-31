@@ -18,10 +18,10 @@ const X_UNID = 125.4; // largura do cursor interno = unidade "x" da área de pro
 const SLOGAN = ['sua marca nas', 'respostas das IAs'];
 const PESO = 600, TRACKING = -0.03, ENTRELINHA = 1.08;
 
-function linha(texto) {
-  return JSON.parse(execFileSync('python3', ['-I', PY, FONTE, String(PESO), String(TRACKING), texto]).toString());
+function linha(texto, peso = PESO, tracking = TRACKING) {
+  return JSON.parse(execFileSync('python3', ['-I', PY, FONTE, String(peso), String(tracking), texto]).toString());
 }
-const LINHAS = SLOGAN.map(linha);
+const LINHAS = SLOGAN.map(t => linha(t));
 const UPM = LINHAS[0].upm, XH = LINHAS[0].xHeight / UPM, DESC = 0.2;
 
 const icone = (cor, x = 0, y = 0, esc = 1) =>
@@ -56,6 +56,39 @@ const VERSOES = {
     };
   })(),
 };
+
+// Nome "Promptado" composto em Geist Bold (o logotipo oficial não foi enviado) e slogan em uma linha.
+const NOME = linha('Promptado', 700, -0.04);
+const SLOGAN1 = linha(SLOGAN.join(' '));
+const CAP = NOME.capHeight / UPM;
+const larguraDe = (l, s) => l.largura * s / UPM;
+
+VERSOES.nome = (() => {
+  const s = 300, base = CAP * s;
+  return { nome: 'Nome', w: larguraDe(NOME, s), h: base + DESC * s, corpo: cor => texto(NOME, cor, 0, base, s) };
+})();
+
+// Bloco nome + slogan com a mesma largura (o slogan se ajusta à largura do nome).
+function blocoNomeSlogan(sN) {
+  const wN = larguraDe(NOME, sN);
+  const sS = sN * NOME.largura / SLOGAN1.largura;
+  const b1 = CAP * sN, b2 = b1 + 0.34 * sN + CAP * sS;
+  return { w: wN, topo: 0, base: b2, desc: b2 + DESC * sS, corpo: (cor, x, y) => texto(NOME, cor, x, y + b1, sN) + texto(SLOGAN1, cor, x, y + b2, sS) };
+}
+VERSOES.completo = (() => {
+  const bl = blocoNomeSlogan(165);
+  const tx = IW + X_UNID * 0.75;
+  const y0 = CORPO_H / 2 - bl.base / 2;
+  return { nome: 'Logo, nome e slogan (horizontal)', w: tx + bl.w, h: Math.max(IH, y0 + bl.desc),
+    corpo: cor => icone(cor) + bl.corpo(cor, tx, y0) };
+})();
+VERSOES.completoVertical = (() => {
+  const bl = blocoNomeSlogan(150);
+  const w = Math.max(IW, bl.w);
+  const y0 = IH + X_UNID * 0.6;
+  return { nome: 'Logo, nome e slogan (vertical)', w, h: y0 + bl.desc,
+    corpo: cor => icone(cor, (w - IW) / 2) + bl.corpo(cor, (w - bl.w) / 2, y0) };
+})();
 
 function svg(versao, cor, { pad = 0, largura } = {}) {
   const v = VERSOES[versao];

@@ -349,7 +349,7 @@ function brandbook(tipo) {
   const p = await b.newPage();
 
   // Arquivos de logo: SVG, PDF vetorial e PNG transparente, em 3 cores.
-  const PASTAS = { logo: 'logo', horizontal: 'logo-slogan-horizontal', vertical: 'logo-slogan-vertical' };
+  const PASTAS = { logo: 'logo', horizontal: 'logo-slogan-horizontal', vertical: 'logo-slogan-vertical', nome: 'nome', completo: 'logo-nome-slogan-horizontal', completoVertical: 'logo-nome-slogan-vertical' };
   for (const [versao, pasta] of Object.entries(PASTAS)) {
     const v = VERSOES[versao];
     for (const fmt of ['svg', 'pdf', 'png']) fs.mkdirSync(path.join(ARQ, pasta, fmt), { recursive: true });
