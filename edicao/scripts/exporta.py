@@ -64,7 +64,7 @@ filtro = (f"[0:v]settb=1/30,setpts=N,tpad=stop_mode=clone:stop={segura}[base];"
 subprocess.run(["ffmpeg", "-v", LOG, "-y", "-f", "concat", "-safe", "0", "-i", TRECHOS + "lista.txt",
                 "-framerate", "30", "-start_number", "0", "-i", padrao, "-i", AUDIO,
                 "-filter_complex", filtro, "-map", "[out]", "-map", "2:a",
-                "-fps_mode", "cfr", "-r", "30", "-c:v", "libx264", "-crf", "14", "-preset", "slow", "-pix_fmt", "yuv420p",
+                "-fps_mode", "cfr", "-r", "30", "-c:v", "libx264", "-crf", os.environ.get("CRF", "14"), "-preset", "slow", "-pix_fmt", "yuv420p",
                 "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv",
                 "-c:a", "aac", "-b:a", "192k", "-frames:v", str(total), "-movflags", "+faststart", SAIDA], check=True)
 shutil.rmtree(TRECHOS)
