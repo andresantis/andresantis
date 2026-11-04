@@ -182,3 +182,31 @@ Elas aparecem de duas formas.
 
 - O que é falado durante as ilustrações de tela cheia, porque ali não há legenda. O modelo de transcrição (whisper) ainda não foi instalado.
 - A resolução original do vídeo, antes de passar pelo Instagram. Por isso, os tamanhos "@1080" dependem da suposição explicada em "Como foi medido".
+
+---
+
+## 6. Quando usar cada estilo
+
+Existem três estilos de referência (todos adaptados à marca Promptado: Geist, verde `#22C55E`, texto preto sobre o verde):
+
+- **A. Interface** (este arquivo, referência @lukachoi_): legenda pequena no topo, palavra grande atrás da cabeça, ilustrações com cara de app, cortes secos a cada ~1,7 s.
+- **B. Bastidores** (`estilo-referencias-2-e-3.md`, Ref 2): 1 palavra por vez no meio da tela, em caixa alta (Geist Bold, letras apertadas), com a palavra-chave em verde; listas numeradas que se montam em tela cheia; transição com desfoque e clarão; corte a cada ~2,4 s.
+- **C. Demonstração** (`estilo-referencias-2-e-3.md`, Ref 3): legenda karaokê embaixo (~72% da altura), 2–3 palavras, branca com contorno, palavra falada em verde; etiqueta de título em pílula no topo ("NOVIDADE · …") e pílulas de status; poucos cortes, a tela e a câmera em movimento carregam o vídeo.
+
+### Como escolher
+
+| Tipo de vídeo | Estilo | Por quê |
+|---|---|---|
+| Explicação sobre IA, GEO/AEO, dados, "como funciona" (você falando para a câmera, sentado) | **A. Interface** | Cada ideia ou número vira um elemento visual que explica; é o estilo mais didático. |
+| Resultado com números, prints e painéis da Promptado (ex.: vídeo 3) | **A. Interface** + **listas da B** | Painel e contadores em tela cheia; a lista numerada da B ajuda quando há passos. |
+| Bastidores, evento, reunião, rotina de trabalho, gente em pé, várias pessoas na cena | **B. Bastidores** | A palavra única no meio acompanha a energia da conversa e não disputa espaço com várias pessoas; o clarão marca a troca de assunto. |
+| Empreendedorismo e motivação com frase forte ("dicas", "o que aprendi", opinião) | **B. Bastidores** | Uma palavra por vez dá peso a cada palavra da frase. |
+| Teste ou demonstração de ferramenta, tela de celular ou computador, novidade de IA ("olha o que essa IA faz") | **C. Demonstração** | A tela gravada é o conteúdo: a legenda vai embaixo para não cobrir a tela, e as pílulas dão contexto ("NOVIDADE", "✓ funcionou"). |
+| Lifestyle, viagem, carro, rotina fora do escritório | **C. Demonstração** (sem pílulas de status) | Legenda embaixo deixa a imagem respirar; poucos cortes combinam com cenas bonitas. |
+| Notícia rápida do mercado de IA | **C** com a etiqueta "NOVIDADE" | A pílula no topo diz o tema em 1 segundo. |
+
+### Regras que valem para os três
+- Cor do vídeo sempre intocada; formato 1080×1920; nada importante fora da área segura (x 60–900, y 250–1470).
+- **Textos centralizados na tela** (x = 540), menores se preciso para não entrar na faixa da direita (pedido do André no vídeo 3).
+- Só números que o André fala ou que estão nas imagens que ele manda.
+- Na dúvida entre dois estilos, propor um no plano e citar o outro como alternativa.
