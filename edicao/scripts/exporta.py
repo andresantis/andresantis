@@ -12,7 +12,7 @@ import json, os, shutil, subprocess, sys
 
 video, v = sys.argv[1], sys.argv[2]
 RAIZ = "/home/user/andresantis/"
-COMP = {("video1", "curta"): "Video1-Curta", ("video1", "completa"): "Video1-Completa", ("video2", "completa"): "Video2", ("video3", "completa"): "Video3"}[(video, v)]
+COMP = {("video1", "curta"): "Video1-Curta", ("video1", "completa"): "Video1-Completa", ("video2", "completa"): "Video2", ("video3", "completa"): "Video3", ("video4", "completa"): "Video4"}[(video, v)]
 PROPS = (lambda modo: {"versao": v, "modo": modo}) if video == "video1" else (lambda modo: {"modo": modo})
 COM_ZOOM = json.load(open(RAIZ + f"edicao/{video}/config.json")).get("zoom", True)
 NAVEGADOR = "/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell"

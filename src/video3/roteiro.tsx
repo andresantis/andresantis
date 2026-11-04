@@ -6,11 +6,9 @@ import { CardPromptadoSimples, CardRespostaCusto, Grade100, PreviaPainel, TelaPa
 
 // Roteiro do vídeo 3 (plano aprovado em edicao/video3/plano.md). Sem palavra atrás da cabeça:
 // a cabeça fica no alto do quadro, então as palavras-chave vão em caixa verde sobre o peito.
-export const roteiroVideo3 = (p: Palavra[]): Roteiro => {
-  const a = criaAncora(p);
-  const chamada = a("entra");
-  const itens: Item[] = [
-    // gancho
+// Parte comum aos vídeos 3 e 4 (mesma gravação até "...dentro da resposta da IA.").
+export const itensResultado = (a: ReturnType<typeof criaAncora>): Item[] => [
+  // gancho
     { de: a("isso"), ate: a("ia"), el: <PreviaPainel desde={a("isso")} ate={a("ia")} /> },
     { de: a("ia"), ate: a("só"), el: <CaixaVerde texto="IA" desde={a("ia")} y={1200} /> },
     { de: a("só"), ate: a("tivemos"), el: <ChipsRiscados y={1210} itens={[["só mais uma ferramenta", a("só"), a("ferramenta")]]} /> },
@@ -46,6 +44,13 @@ export const roteiroVideo3 = (p: Palavra[]): Roteiro => {
       de: a("dentro", 2, -0.5), ate: a("se"), esconde: true,
       el: <TelaChaves desde={a("dentro", 2, -0.5)} palavras={[["dentro", a("dentro", 2)], ["da", a("resposta", 1, -0.3)], ["resposta", a("resposta")], ["da IA", a("ia", 3)]]} />,
     },
+];
+
+export const roteiroVideo3 = (p: Palavra[]): Roteiro => {
+  const a = criaAncora(p);
+  const chamada = a("entra");
+  const itens: Item[] = [
+    ...itensResultado(a),
     { de: a("promptado"), ate: chamada, el: <CardPromptadoSimples desde={a("promptado")} /> },
     { de: chamada, ate: 99999, el: <Botao texto="entrar em contato ↓" desde={chamada} y={1290} /> },
   ];

@@ -60,7 +60,19 @@ def corrige_video3(pal):
     return out
 
 
-out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3}[video](pal)
+def corrige_video4(pal):
+    TROCA = {"cloud": "Claude", "chatebt": "ChatGPT", "chatept": "ChatGPT", "chatepd": "ChatGPT", "prontada": "Promptado"}
+    out = []
+    for t, w in pal:
+        base = re.sub(r"[^\wÀ-ú-]", "", w)
+        if base.lower() in TROCA: w = w.replace(base, TROCA[base.lower()])
+        # "comenta IA." -> 'comenta "IA".'
+        if base == "IA" and out and out[-1][1].lower() == "comenta": w = w.replace("IA", '"IA"')
+        out.append([t, w])
+    return out
+
+
+out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3, "video4": corrige_video4}[video](pal)
 os.makedirs(f"/home/user/andresantis/src/{video}", exist_ok=True)
 json.dump(out, open(f"/home/user/andresantis/src/{video}/legendas-{v}.json", "w"), ensure_ascii=False)
 print(v, len(out), "palavras")
