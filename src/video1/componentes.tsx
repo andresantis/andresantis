@@ -1,3 +1,4 @@
+import { createContext, useContext } from "react";
 import { AbsoluteFill, Easing, interpolate, interpolateColors, useCurrentFrame } from "remotion";
 import { LogoPromptado } from "../LogoPromptado";
 import { CORES, FONTE } from "../marca";
@@ -403,6 +404,19 @@ export const Botao: React.FC<{ texto: string; desde: number; y?: number; claro?:
 };
 
 // ---------- Telas cheias ----------
+// Eixo dos elementos: por padrão eles ficam centralizados na área segura (x = 480).
+// Com dx = 60 e escala < 1 ficam centralizados na tela (x = 540) sem entrar na faixa da direita.
+export const Eixo = createContext({ dx: 0, escala: 1 });
+export const NoEixo: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { dx, escala } = useContext(Eixo);
+  if (!dx && escala === 1) return <>{children}</>;
+  return (
+    <AbsoluteFill style={{ transform: `translateX(${dx}px) scale(${escala})`, transformOrigin: `${CENTRO_X}px 960px` }}>
+      {children}
+    </AbsoluteFill>
+  );
+};
+
 export const TelaCheia: React.FC<{ claro?: boolean; children: React.ReactNode }> = ({ claro, children }) => {
   const C = claro ? L : E;
   const guia = (s: React.CSSProperties) => <div style={{ position: "absolute", background: C.linha, ...s }} />;
@@ -412,7 +426,7 @@ export const TelaCheia: React.FC<{ claro?: boolean; children: React.ReactNode }>
       {guia({ left: 900, top: 0, bottom: 0, width: 1 })}
       {guia({ top: 250, left: 0, right: 0, height: 1 })}
       {guia({ top: 1470, left: 0, right: 0, height: 1 })}
-      {children}
+      <NoEixo>{children}</NoEixo>
     </AbsoluteFill>
   );
 };

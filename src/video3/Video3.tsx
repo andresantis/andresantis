@@ -1,5 +1,6 @@
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { Camera, FonteVideo, QuadrosGlitch } from "../video1/Camera";
+import { Eixo, NoEixo } from "../video1/componentes";
 import { Legenda, montaLinhas } from "../video1/Legenda";
 import { Palavra } from "../video1/tempo";
 import { Modo } from "../video1/Video1";
@@ -11,6 +12,8 @@ import { roteiroVideo3 } from "./roteiro";
 // e com a legenda sobre a faixa (fundo com a fita de LED forte).
 const FONTE = { video: "editar/video3.mp4", mascaras: "", mascarasInv: "", zoom: false };
 const SEGURA_NO_FIM = 15; // 0,5 s parado no fim
+// Textos e elementos centralizados na tela (pedido do André), 7% menores para não entrar na faixa da direita.
+const EIXO = { dx: 60, escala: 0.93 };
 
 export const duracaoVideo3 = () => linha.duracaoQuadros + SEGURA_NO_FIM;
 
@@ -41,9 +44,13 @@ export const Video3: React.FC<{ modo?: Modo }> = ({ modo = "previa" }) => {
         ) : (
           <QuadrosGlitch trechos={trechos} glitch={[glitch]} />
         )}
-        {ativos.filter((i) => !i.esconde).map((i, k) => <AbsoluteFill key={k}>{i.el}</AbsoluteFill>)}
-        <Legenda linhas={linhas} escondida={ativos.some((i) => i.esconde)} faixa />
-        {ativos.filter((i) => i.esconde).map((i, k) => <AbsoluteFill key={`t${k}`}>{i.el}</AbsoluteFill>)}
+        <Eixo.Provider value={EIXO}>
+          <NoEixo>
+            {ativos.filter((i) => !i.esconde).map((i, k) => <AbsoluteFill key={k}>{i.el}</AbsoluteFill>)}
+            <Legenda linhas={linhas} escondida={ativos.some((i) => i.esconde)} faixa />
+          </NoEixo>
+          {ativos.filter((i) => i.esconde).map((i, k) => <AbsoluteFill key={`t${k}`}>{i.el}</AbsoluteFill>)}
+        </Eixo.Provider>
         {modo === "previa" ? (
           <>
             <Sequence from={r.chamada - 12} durationInFrames={20}>
