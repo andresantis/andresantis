@@ -72,7 +72,22 @@ def corrige_video4(pal):
     return out
 
 
-out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3, "video4": corrige_video4}[video](pal)
+def corrige_video5(pal):
+    TROCA = {"dio": "GEO", "geo": "GEO", "cta": "CTA"}
+    out = []
+    for t, w in pal:
+        base = re.sub(r"[^\wÀ-ú-]", "", w)
+        if base.lower() in TROCA: w = w.replace(base, TROCA[base.lower()])
+        # "Como eu gera o demanda hoje para o Promptado?" -> "Como eu gero demanda hoje para a Promptado?"
+        if base == "gera" and out and out[-1][1] == "eu": w = "gero"
+        if base == "o" and out and out[-1][1] == "gero": continue
+        if base == "o" and out and out[-1][1] == "para" and len(out) < 8: w = "a"
+        out.append([t, w])
+    return out
+
+
+out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3, "video4": corrige_video4,
+       "video5": corrige_video5}[video](pal)
 os.makedirs(f"/home/user/andresantis/src/{video}", exist_ok=True)
 json.dump(out, open(f"/home/user/andresantis/src/{video}/legendas-{v}.json", "w"), ensure_ascii=False)
 print(v, len(out), "palavras")
