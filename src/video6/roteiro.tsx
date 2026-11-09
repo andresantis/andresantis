@@ -1,3 +1,4 @@
+import { staticFile } from "remotion";
 import { LogoPromptado } from "../LogoPromptado";
 import { CORES } from "../marca";
 import { Botao } from "../video1/componentes";
@@ -6,7 +7,7 @@ import { criaAncora, Palavra } from "../video1/tempo";
 import { ChipsRiscados } from "../video2/componentes";
 import {
   BarraBusca, CardVisibilidade, ChaveTravada, IconeLogo, LinhaLogos, LOGOS, PerfisParaResposta, Pilula, PilulasEmpilhadas,
-  RespostaRecomendada,
+  PrintCelular,
 } from "./componentes";
 
 // Roteiro do vídeo 6 (plano aprovado em edicao/video6/plano.md), estilo C.
@@ -29,7 +30,15 @@ export const roteiroVideo6 = (p: Palavra[]): Roteiro => {
     },
     { de: a("busca"), ate: a("lista"), el: <BarraBusca desde={a("busca")} metaIA={a("ia", 2)} y={Y_PILULA + 176} /> },
     { de: a("existe"), ate: a("mudou"), el: <Pilula texto="✗ sua empresa fora da resposta" desde={a("existe")} y={Y_PILULA + 176} tamanho={36} /> },
-    { de: a("lista"), ate: a("confirma", 1, 0.4), el: <PerfisParaResposta desde={a("lista")} risco={a("lembra")} resposta={a("monta")} y={Y_CARD} /> },
+    { de: a("lista"), ate: a("monta", 1, -0.3), el: <PerfisParaResposta desde={a("lista")} risco={a("lembra")} resposta={99999} y={Y_CARD} /> },
+    // print real: busca "andre santis" na Meta IA do Instagram (enviado pelo André)
+    {
+      de: a("monta", 1, -0.3), ate: a("impossível"), esconde: true,
+      el: (
+        <PrintCelular src={staticFile("video6/busca-andre-santis.jpg")} recorte={[0, 100, 736, 930]}
+          desde={a("monta", 1, -0.3)} ate={a("impossível")} largura={640} y={360} />
+      ),
+    },
     { de: a("confirma"), ate: a("impossível"), el: <Pilula texto="✓ confirmado pela Meta" desde={a("confirma")} y={Y_PILULA} verde /> },
     { de: a("impossível"), ate: a("qual"), el: <Pilula texto="não dá para desativar" desde={a("impossível")} y={Y_PILULA} /> },
     { de: a("impossível"), ate: a("qual"), el: <ChaveTravada desde={a("impossível")} tenta={a("desativar")} y={Y_CARD} /> },
@@ -47,7 +56,14 @@ export const roteiroVideo6 = (p: Palavra[]): Roteiro => {
       el: <ChipsRiscados y={Y_CARD + 30} itens={[["links", a("links"), a("links", 1, 0.3)], ["perfis", a("perfis"), a("perfis", 1, 0.3)]]} />,
     },
     { de: a("pronta"), ate: a("rápido"), el: <Pilula texto="resposta pronta ✓" desde={a("pronta")} y={Y_PILULA} verde /> },
-    { de: a("ela"), ate: a("rápido"), el: <RespostaRecomendada desde={a("ela")} selo={a("recomendação")} y={Y_CARD} /> },
+    // print real: busca "promptado" na Meta IA do Instagram (enviado pelo André)
+    {
+      de: a("ela"), ate: a("rápido"), esconde: true,
+      el: (
+        <PrintCelular src={staticFile("video6/busca-promptado.jpg")} recorte={[0, 100, 736, 835]}
+          desde={a("ela")} ate={a("rápido")} largura={720} y={400} />
+      ),
+    },
     {
       de: a("rápido"), ate: a("ponto", 2),
       el: <PilulasEmpilhadas y={Y_PILULA} itens={[["rápido", a("rápido")], ["eficiente", a("eficiente")], ["curto, seco e direto", a("direto")]]} />,

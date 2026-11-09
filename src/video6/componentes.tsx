@@ -1,4 +1,4 @@
-import { interpolate, useCurrentFrame } from "remotion";
+import { Img, interpolate, useCurrentFrame } from "remotion";
 import { siGoogle, siGooglegemini, siInstagram, siPerplexity } from "simple-icons";
 import { CORES, FONTE } from "../marca";
 import { cresce, Selo } from "../video1/componentes";
@@ -235,5 +235,31 @@ export const CardVisibilidade: React.FC<{ desde: number; zero: number; vinte: nu
         </div>
       </div>
     </Card>
+  );
+};
+
+// ---------- Print real do celular (enviado pelo André), recortado na parte que importa ----------
+// recorte: [x, y, largura, altura] em px da imagem original. Aproxima devagar enquanto está na tela.
+export const PrintCelular: React.FC<{
+  src: string;
+  recorte: [number, number, number, number];
+  desde: number;
+  ate: number;
+  largura: number;
+  y: number;
+}> = ({ src, recorte, desde, ate, largura, y }) => {
+  const f = useCurrentFrame();
+  const [rx, ry, rw, rh] = recorte;
+  const escala = largura / rw;
+  const altura = rh * escala;
+  const entra = cresce(f, desde, 6);
+  const sai = 1 - cresce(f, ate - 5, 5);
+  const zoom = interpolate(f, [desde, ate], [1, 1.04], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  return (
+    <div style={{ position: "absolute", left: CENTRO - largura / 2, top: y, width: largura, height: altura, borderRadius: 34,
+      overflow: "hidden", boxShadow: "0 24px 60px rgba(0,0,0,0.45)", border: `3px solid ${E.linha}`, opacity: entra * sai,
+      transform: `translateY(${(1 - entra) * 60}px) scale(${zoom})` }}>
+      <Img src={src} style={{ position: "absolute", left: -rx * escala, top: -ry * escala, width: 736 * escala }} />
+    </div>
   );
 };

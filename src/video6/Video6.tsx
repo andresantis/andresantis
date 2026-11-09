@@ -34,7 +34,7 @@ export const Video6: React.FC<{ modo?: Modo }> = ({ modo = "previa" }) => {
         <Eixo.Provider value={EIXO}>
           <NoEixo>
             {ativos.map((i, k) => <AbsoluteFill key={k}>{i.el}</AbsoluteFill>)}
-            <LegendaKaraoke blocos={blocos} />
+            <LegendaKaraoke blocos={blocos} escondida={ativos.some((i) => i.esconde)} />
           </NoEixo>
         </Eixo.Provider>
         {modo === "previa" ? (
