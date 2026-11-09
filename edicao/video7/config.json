@@ -1,0 +1,38 @@
+{
+ "_nota": "Vídeo 7 (gravação 4K reduzida para 1080x1920). Cortes PROPOSTOS (aguardando aprovação): 'né?' (51,7 e 92,2), 'sabe?' (71,0 e 102,2), a fala de fora 85,6–90,5 e o final fora do assunto a partir de 114,7.",
+ "cortes": [
+  [
+   51.62,
+   52.0
+  ],
+  [
+   70.94,
+   71.44
+  ],
+  [
+   92.12,
+   92.36
+  ],
+  [
+   102.12,
+   102.42
+  ],
+  [
+   85.6,
+   90.52
+  ],
+  [
+   114.7,
+   127.1
+  ]
+ ],
+ "versoes": {
+  "completa": [
+   [
+    0.0,
+    127.1
+   ]
+  ]
+ },
+ "zoom": false
+}
