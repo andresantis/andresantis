@@ -86,8 +86,27 @@ def corrige_video5(pal):
     return out
 
 
+def corrige_video6(pal):
+    TROCA = {"chatept": "ChatGPT", "gmni": "Gemini", "hyperplexer": "Perplexity", "perplexer": "Perplexity"}
+    out = []
+    for t, w in pal:
+        base = re.sub(r"[^\wÀ-ú-]", "", w)
+        if base.lower() in TROCA: w = w.replace(base, TROCA[base.lower()])
+        # "aí a monta" -> "a IA monta" (confirmado pelo André)
+        if base == "monta" and len(out) >= 2 and out[-1][1] == "a" and out[-2][1].lower() == "aí":
+            out[-2][1] = "a"; out[-1][1] = "IA"
+        # "é com corte seco" -> "é curto, seco" (confirmado)
+        if base == "corte" and out and out[-1][1] == "com":
+            out.pop(); w = "curto,"
+        # "da Barent Alcarca" -> "da Ben Rental Car," (confirmado)
+        if base.lower().startswith("alcarca") and out and out[-1][1].lower().startswith("barent"):
+            out[-1][1] = "Ben Rental"; w = "Car,"
+        out.append([t, w])
+    return out
+
+
 out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3, "video4": corrige_video4,
-       "video5": corrige_video5}[video](pal)
+       "video5": corrige_video5, "video6": corrige_video6}[video](pal)
 os.makedirs(f"/home/user/andresantis/src/{video}", exist_ok=True)
 json.dump(out, open(f"/home/user/andresantis/src/{video}/legendas-{v}.json", "w"), ensure_ascii=False)
 print(v, len(out), "palavras")

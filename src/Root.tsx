@@ -6,6 +6,7 @@ import { duracaoVideo2, Video2 } from "./video2/Video2";
 import { duracaoVideo3, Video3 } from "./video3/Video3";
 import { duracaoVideo4, Video4 } from "./video4/Video4";
 import { duracaoVideo5, Video5 } from "./video5/Video5";
+import { duracaoVideo6, Video6 } from "./video6/Video6";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -55,6 +56,13 @@ export const RemotionRoot: React.FC = () => {
         id="Video5"
         component={Video5}
         durationInFrames={duracaoVideo5()}
+        defaultProps={{ modo: "previa" as const }}
+        {...FORMATO_VERTICAL}
+      />
+      <Composition
+        id="Video6"
+        component={Video6}
+        durationInFrames={duracaoVideo6()}
         defaultProps={{ modo: "previa" as const }}
         {...FORMATO_VERTICAL}
       />
