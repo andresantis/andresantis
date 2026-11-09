@@ -105,8 +105,21 @@ def corrige_video6(pal):
     return out
 
 
+def corrige_video7(pal):
+    TROCA = {"alugue": "alugo", "entregue": "entrego", "footerzinha": "footer"}
+    out = []
+    for t, w in pal:
+        base = re.sub(r"[^\wÀ-ú-]", "", w)
+        if base.lower() in TROCA: w = w.replace(base, TROCA[base.lower()])
+        # o áudio diz "Pô, cliquei aqui"; o transcritor ouviu "Tipo, clique"
+        if base == "Tipo" and w.endswith(","): w = "Pô,"
+        if base == "clique": w = "cliquei"
+        out.append([t, w])
+    return out
+
+
 out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3, "video4": corrige_video4,
-       "video5": corrige_video5, "video6": corrige_video6}[video](pal)
+       "video5": corrige_video5, "video6": corrige_video6, "video7": corrige_video7}[video](pal)
 os.makedirs(f"/home/user/andresantis/src/{video}", exist_ok=True)
 json.dump(out, open(f"/home/user/andresantis/src/{video}/legendas-{v}.json", "w"), ensure_ascii=False)
 print(v, len(out), "palavras")

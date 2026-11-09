@@ -8,7 +8,7 @@ Versão única: **completa, 86,7 s**. Cortes: 34 pausas, "né?" e "sabe?" (2 de 
 Pela tabela do `estilo.md` (seção 6): é **bastidores de uma consultoria real**, você sentado olhando para a tela do cliente, gravação espontânea → **estilo B**:
 
 - **Legenda de 1 palavra por vez, no meio da tela**, em **Geist Bold, CAIXA ALTA, letras apertadas** (~110 px), branca com sombra; **palavras-chave em verde `#22C55E`** (ex.: SCHEMA FAQ, ORLANDO, FERRARI, INTELIGÊNCIA ARTIFICIAL). Centro a ~58% da altura (y ≈ 1110), sobre a camiseta, onde o fundo é liso.
-- **Selo fixo no topo** durante todo o vídeo: "• ACOMPANHAMENTO DE PERTO" (Geist Medium, pílula escura, ponto verde) e, abaixo, o logo **Promptado** pequeno. É o que diz para quem chega no meio do vídeo que isto é uma consultoria real.
+- **Selo no topo na abertura** (até "página", ~9,7 s; depois sua cabeça sobe até o topo e ele cobriria os olhos): "• ACOMPANHAMENTO DE PERTO" (Geist Medium, pílula escura, ponto verde) e, abaixo, o logo **Promptado** pequeno. É o que diz para quem chega no meio do vídeo que isto é uma consultoria real.
 - **Listas numeradas que se montam** em tela cheia (fundo preto com brilho suave no centro, como a Ref 2), para os passos da consultoria.
 - **Transição com desfoque e clarão branco** (~0,3 s) entre as partes do vídeo, como a Ref 2.
 - **Sem zoom**, textos centralizados na tela, **cor do vídeo intocada**, 1080×1920, nada importante fora da área segura.
