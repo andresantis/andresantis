@@ -6,8 +6,8 @@ Uso: python3 converte_hdr.py <entrada_hdr> <saida.mp4>
 """
 import subprocess, sys
 
-# Gravações em 4K são reduzidas para 1080×1920 (só o tamanho; a cor segue o mesmo ajuste).
-FILTRO = ("zscale=w=1080:h=1920:f=lanczos,zscale=t=linear:npl=185,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,"
+# Gravações em 4K são reduzidas para 1080×1920 e acertadas para 30 fps (só tamanho e ritmo; a cor segue o mesmo ajuste).
+FILTRO = ("fps=30,zscale=w=1080:h=1920:f=lanczos,zscale=t=linear:npl=185,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,"
           "zscale=t=bt709:m=bt709:r=tv,format=yuv420p")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", sys.argv[1], "-vf", FILTRO,
                 "-c:v", "libx264", "-crf", "10", "-preset", "slow", "-pix_fmt", "yuv420p",
