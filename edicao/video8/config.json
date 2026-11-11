@@ -1,0 +1,30 @@
+{
+ "_nota": "Vídeo 8 (4K 29,97 fps reduzido para 1080x1920 a 30 fps). Cortes PROPOSTOS (aguardando aprovação): 'né?' (4,0), 'Hoje você pode economizar e' (93,1), 'e a gente estava até discutindo isso hoje numa reunião,' (98,3) e 'para ser recomendado dentro das inteligências artificiais,' (113,1).",
+ "cortes": [
+  [
+   3.92,
+   4.46
+  ],
+  [
+   93.06,
+   96.3
+  ],
+  [
+   98.3,
+   101.1
+  ],
+  [
+   113.06,
+   115.48
+  ]
+ ],
+ "versoes": {
+  "completa": [
+   [
+    0.0,
+    141.51
+   ]
+  ]
+ },
+ "zoom": false
+}
