@@ -4,7 +4,7 @@ import { CORES } from "../marca";
 import { Item, Roteiro } from "../video1/roteiros";
 import { criaAncora, Palavra } from "../video1/tempo";
 import { Pilula, PilulasEmpilhadas, PrintCelular } from "../video6/componentes";
-import { RotuloFoto, TelaCalculo } from "./componentes";
+import { LogoChatGPT, LogosHistoria, RotuloFoto, TelaCalculo } from "./componentes";
 
 // Roteiro do vídeo 8 (plano aprovado em edicao/video8/plano.md): estilo C com a lista do estilo B no cálculo.
 // Pílulas no topo, sobre o teto solar (y 270–520).
@@ -20,9 +20,15 @@ export const roteiroVideo8 = (p: Palavra[]): Roteiro => {
     { de: a("promptado"), ate: a("foi"), el: <Pilula texto={<>{logo} como tudo começou</>} desde={a("promptado")} y={Y + 84} tamanho={38} /> },
     // linha do tempo
     {
-      de: a("2024"), ate: a("oportunidade"),
-      el: <PilulasEmpilhadas y={Y} itens={[["fim de 2024", a("2024"), true], ["SF Leilões", a("sfleilões")], ["ChatGPT", a("chatgpt")]]} />,
+      de: a("2024"), ate: a("chatgpt", 2),
+      el: <PilulasEmpilhadas y={Y} passo={0}
+        itens={[["fim de 2024", a("2024"), true]]} />,
     },
+    {
+      de: a("sfleilões"), ate: a("chatgpt", 2),
+      el: <LogosHistoria y={Y + 90} sf={a("sfleilões")} chatgpt={a("chatgpt")} />,
+    },
+    { de: a("chatgpt", 2), ate: a("oportunidade"), el: <Pilula texto={<><LogoChatGPT tamanho={56} /> ChatGPT</>} desde={a("chatgpt", 2)} y={Y} tamanho={46} /> },
     { de: a("oportunidade"), ate: a("recomendava"), el: <Pilula texto="💡 oportunidade" desde={a("oportunidade")} y={Y} verde /> },
     {
       de: a("recomendava"), ate: a("e", 6),

@@ -1,7 +1,8 @@
-import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Img, staticFile, useCurrentFrame } from "remotion";
 import { LogoPromptado } from "../LogoPromptado";
 import { CORES, FONTE } from "../marca";
 import { chega, cresce, Selo } from "../video1/componentes";
+import { CAMINHO_CHATGPT } from "./logoChatgpt";
 
 // Ilustrações do vídeo 8 (plano em edicao/video8/plano.md): tela do cálculo no estilo B
 // (fundo escuro com brilho, lista que se monta) e o comparativo com a Promptado.
@@ -72,6 +73,39 @@ export const RotuloFoto: React.FC<{ desde: number; ate: number; y: number }> = (
   return (
     <div style={{ ...base, left: 60, width: 840, top: y, textAlign: "center", opacity: p }}>
       <Selo texto="André & Luís · fundadores" style={{ fontSize: 34, padding: "10px 24px" }} />
+    </div>
+  );
+};
+
+// Logos citados na história: SF Consulting (imagem enviada pelo André, recortada) e ChatGPT.
+export const LogoSF: React.FC<{ altura: number }> = ({ altura }) => (
+  <span style={{ display: "inline-flex", background: "#02162F", borderRadius: 12, padding: 4 }}>
+    <Img src={staticFile("video8/logo-sf.png")} style={{ height: altura, display: "block" }} />
+  </span>
+);
+
+export const LogoChatGPT: React.FC<{ tamanho: number }> = ({ tamanho }) => (
+  <svg viewBox="0 0 24 24" width={tamanho} height={tamanho} style={{ fillRule: "evenodd" }}>
+    <path d={CAMINHO_CHATGPT} fill="#FFFFFF" />
+  </svg>
+);
+
+// SF e ChatGPT lado a lado, em cards grandes, entrando quando são falados.
+export const LogosHistoria: React.FC<{ y: number; sf: number; chatgpt: number }> = ({ y, sf, chatgpt }) => {
+  const f = useCurrentFrame();
+  const card = (q: number, conteudo: React.ReactNode, fundo: string) => {
+    const p = cresce(f, q, 5);
+    return p > 0 ? (
+      <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 14, height: 170, padding: "0 26px",
+        borderRadius: 28, background: fundo, transform: `scale(${0.8 + 0.2 * p})`, opacity: p, boxShadow: "0 10px 30px rgba(0,0,0,0.35)" }}>
+        {conteudo}
+      </span>
+    ) : null;
+  };
+  return (
+    <div style={{ ...base, left: 60, width: 840, top: y, display: "flex", gap: 22, justifyContent: "center", alignItems: "center" }}>
+      {card(sf, <Img src={staticFile("video8/logo-sf.png")} style={{ height: 150, display: "block" }} />, "#02162F")}
+      {card(chatgpt, <><LogoChatGPT tamanho={84} /><span style={{ fontSize: 50, fontWeight: 700, color: "#fff", letterSpacing: "-0.03em" }}>ChatGPT</span></>, E.superficie)}
     </div>
   );
 };

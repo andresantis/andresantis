@@ -81,12 +81,12 @@ export const Pilula: React.FC<{
 };
 
 // Lista de pílulas que se empilham (status "✓ …" / "✗ …").
-export const PilulasEmpilhadas: React.FC<{ itens: [string, number, boolean?][]; y: number; passo?: number; tamanho?: number }> = ({
+export const PilulasEmpilhadas: React.FC<{ itens: [React.ReactNode, number, boolean?][]; y: number; passo?: number; tamanho?: number }> = ({
   itens, y, passo = 80, tamanho = 40,
 }) => (
   <>
     {itens.map(([t, q, verde], i) => (
-      <Pilula key={t} texto={t} desde={q} y={y + i * passo} verde={verde} tamanho={tamanho} />
+      <Pilula key={i} texto={t} desde={q} y={y + i * passo} verde={verde} tamanho={tamanho} />
     ))}
   </>
 );
