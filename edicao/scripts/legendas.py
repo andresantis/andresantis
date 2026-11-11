@@ -118,8 +118,22 @@ def corrige_video7(pal):
     return out
 
 
+def corrige_video8(pal):
+    TROCA = {"chatept": "ChatGPT", "dio": "GEO", "diy": "GEO", "luis": "Luís", "perguntou": "pergunta"}
+    out = []
+    for t, w in pal:
+        base = re.sub(r"[^\wÀ-ú-]", "", w)
+        if base.lower() in TROCA: w = w.replace(base, TROCA[base.lower()])
+        if base == "SF": w = w.replace("SF", "SF Leilões")
+        if base == "R399": w = w.replace("R$399", "R$ 399")
+        # áudio: "para você que busca"
+        if base == "buscar" and out and out[-1][1] == "você": out.append([t, "que"]); w = "busca"
+        out.append([t, w])
+    return out
+
+
 out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3, "video4": corrige_video4,
-       "video5": corrige_video5, "video6": corrige_video6, "video7": corrige_video7}[video](pal)
+       "video5": corrige_video5, "video6": corrige_video6, "video7": corrige_video7, "video8": corrige_video8}[video](pal)
 os.makedirs(f"/home/user/andresantis/src/{video}", exist_ok=True)
 json.dump(out, open(f"/home/user/andresantis/src/{video}/legendas-{v}.json", "w"), ensure_ascii=False)
 print(v, len(out), "palavras")

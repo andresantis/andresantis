@@ -35,7 +35,7 @@ export const blocosKaraoke = (palavras: Palavra[], duracao: number, maxPalavras 
 const NOMES: [RegExp, string][] = [
   [/\bias\b/g, "IAs"], [/\bia\b/g, "IA"], [/instagram/g, "Instagram"], [/\bmeta\b/g, "Meta"], [/chatgpt/g, "ChatGPT"],
   [/gemini/g, "Gemini"], [/perplexity/g, "Perplexity"], [/google/g, "Google"], [/\bai\b/g, "AI"],
-  [/promptado/g, "Promptado"], [/ben rental car/g, "Ben Rental Car"], [/\bben\b/g, "Ben"], [/rental/g, "Rental"], [/\bcar\b/g, "Car"],
+  [/promptado/g, "Promptado"], [/\bsf leilões\b/g, "SF Leilões"], [/luís/g, "Luís"], [/\bgeo\b/g, "GEO"], [/ben rental car/g, "Ben Rental Car"], [/\bben\b/g, "Ben"], [/rental/g, "Rental"], [/\bcar\b/g, "Car"],
 ];
 const minusculas = (t: string) => NOMES.reduce((s, [re, n]) => s.replace(re, n), t.toLowerCase());
 
@@ -247,7 +247,8 @@ export const PrintCelular: React.FC<{
   ate: number;
   largura: number;
   y: number;
-}> = ({ src, recorte, desde, ate, largura, y }) => {
+  larguraImagem?: number; // largura em px da imagem original (os prints do celular têm 736)
+}> = ({ src, recorte, desde, ate, largura, y, larguraImagem = 736 }) => {
   const f = useCurrentFrame();
   const [rx, ry, rw, rh] = recorte;
   const escala = largura / rw;
@@ -259,7 +260,7 @@ export const PrintCelular: React.FC<{
     <div style={{ position: "absolute", left: CENTRO - largura / 2, top: y, width: largura, height: altura, borderRadius: 34,
       overflow: "hidden", boxShadow: "0 24px 60px rgba(0,0,0,0.45)", border: `3px solid ${E.linha}`, opacity: entra * sai,
       transform: `translateY(${(1 - entra) * 60}px) scale(${zoom})` }}>
-      <Img src={src} style={{ position: "absolute", left: -rx * escala, top: -ry * escala, width: 736 * escala }} />
+      <Img src={src} style={{ position: "absolute", left: -rx * escala, top: -ry * escala, width: larguraImagem * escala }} />
     </div>
   );
 };
