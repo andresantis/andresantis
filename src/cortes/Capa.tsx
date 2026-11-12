@@ -9,14 +9,14 @@ const E = CORES.dark;
 
 // Título: trechos [texto, verde?]
 export const TITULOS: Record<string, [string, boolean?][]> = {
-  corte1: [["19 vídeos", true], [" prontos e nenhum postado"]],
-  corte2: [["O horário que eu "], ["nunca", true], [" uso para postar"]],
-  corte3: [["A "], ["IA", true], [" montou uma loja pra mim"]],
-  corte4: [["48", true], [" clientes quase perdidos"]],
-  corte5: [["O que fazemos quando um cliente quer "], ["cancelar", true]],
+  corte1: [["19 vídeos", true], [" prontos, conteúdo a todo vapor"]],
+  corte2: [["O "], ["horário", true], [" certo pra postar"]],
+  corte3: [["A "], ["IA", true], [" montou minha loja sozinha"]],
+  corte4: [["Como recuperar "], ["48 clientes", true]],
+  corte5: [["Como transformamos cancelamento em "], ["resultado", true]],
   corte6: [["Nossa "], ["Black Friday", true], [" em 2 campanhas"]],
-  corte7: [["Isso que é time "], ["engajado", true]],
-  corte8: [["Bastidores: antes do "], ["webinar", true]],
+  corte7: [["O "], ["time", true], [" que faz acontecer"]],
+  corte8: [["Preparando nosso "], ["webinar", true], [" ao vivo"]],
 };
 
 export const CapaCorte: React.FC<{ id: string; thumb?: boolean }> = ({ id, thumb }) => {
@@ -29,7 +29,7 @@ export const CapaCorte: React.FC<{ id: string; thumb?: boolean }> = ({ id, thumb
       <Img src={staticFile(`cortes/capa-${id}.png`)} style={{ position: "absolute", top: desloc, width: 1080, height: 1920 }} />
       <AbsoluteFill style={{ top: desloc, height: 1920,
         background: "linear-gradient(180deg, rgba(0,0,0,0) 48%, rgba(0,0,0,0.72) 62%, rgba(0,0,0,0.9) 100%)" }} />
-      <div style={{ position: "absolute", left: 70, width: 940, top: 1110 + desloc, textAlign: "center" }}>
+      <div style={{ position: "absolute", left: 70, width: 940, bottom: thumb ? 35 : 320, textAlign: "center" }}>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 12, background: E.verde, color: CORES.textoSobreVerde, fontSize: 32,
           fontWeight: 800, textTransform: "uppercase", padding: "12px 26px", borderRadius: 999 }}>
           • bastidores
