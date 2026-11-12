@@ -11,6 +11,10 @@ import { duracaoVideo7, Video7 } from "./video7/Video7";
 import { Capa7 } from "./video7/Capa";
 import { duracaoVideo8, Video8 } from "./video8/Video8";
 import { Capa8 } from "./video8/Capa";
+import { Corte, duracaoCorte } from "./cortes/Corte";
+import { CapaCorte } from "./cortes/Capa";
+
+const IDS_CORTES = ["corte1", "corte2", "corte3", "corte4", "corte5", "corte6", "corte7", "corte8"];
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -86,6 +90,18 @@ export const RemotionRoot: React.FC = () => {
         {...FORMATO_VERTICAL}
       />
       <Composition id="Capa8" component={Capa8} durationInFrames={1} {...FORMATO_VERTICAL} />
+      {IDS_CORTES.map((id, i) => (
+        <Composition key={id} id={`Corte${i + 1}`} component={Corte} durationInFrames={duracaoCorte(id)}
+          defaultProps={{ id, modo: "previa" as const }} {...FORMATO_VERTICAL} />
+      ))}
+      {IDS_CORTES.map((id, i) => (
+        <Composition key={`c${id}`} id={`Capa-Corte${i + 1}`} component={CapaCorte} durationInFrames={1}
+          defaultProps={{ id, thumb: false }} {...FORMATO_VERTICAL} />
+      ))}
+      {IDS_CORTES.map((id, i) => (
+        <Composition key={`t${id}`} id={`Thumb-Corte${i + 1}`} component={CapaCorte} durationInFrames={1}
+          defaultProps={{ id, thumb: true }} {...FORMATO_VERTICAL} height={1350} />
+      ))}
     </>
   );
 };

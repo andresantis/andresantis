@@ -12,8 +12,8 @@ import json, os, shutil, subprocess, sys
 
 video, v = sys.argv[1], sys.argv[2]
 RAIZ = "/home/user/andresantis/"
-COMP = {("video1", "curta"): "Video1-Curta", ("video1", "completa"): "Video1-Completa", ("video2", "completa"): "Video2", ("video3", "completa"): "Video3", ("video4", "completa"): "Video4", ("video5", "completa"): "Video5", ("video6", "completa"): "Video6", ("video7", "completa"): "Video7", ("video8", "completa"): "Video8"}[(video, v)]
-PROPS = (lambda modo: {"versao": v, "modo": modo}) if video == "video1" else (lambda modo: {"modo": modo})
+COMP = {("video1", "curta"): "Video1-Curta", ("video1", "completa"): "Video1-Completa", ("video2", "completa"): "Video2", ("video3", "completa"): "Video3", ("video4", "completa"): "Video4", ("video5", "completa"): "Video5", ("video6", "completa"): "Video6", ("video7", "completa"): "Video7", ("video8", "completa"): "Video8"}.get((video, v)) or "Corte" + v[len("corte"):]
+PROPS = (lambda modo: {"versao": v, "modo": modo}) if video == "video1" else (lambda modo: {"id": v, "modo": modo}) if v.startswith("corte") else (lambda modo: {"modo": modo})
 COM_ZOOM = json.load(open(RAIZ + f"edicao/{video}/config.json")).get("zoom", True)
 NAVEGADOR = "/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell"
 CAMADAS = RAIZ + f"out/camadas-{video}-{v}/"
@@ -29,7 +29,7 @@ if not so_montagem: subprocess.run(remotion + [CAMADAS, "--sequence", "--image-f
                            "--props=" + json.dumps(PROPS("camadas"))], check=True, cwd=RAIZ)
 if not so_montagem or refaz_audio: subprocess.run(remotion + [AUDIO, "--codec=wav", "--props=" + json.dumps(PROPS("previa"))], check=True, cwd=RAIZ)
 
-linha = json.load(open(RAIZ + f"src/{video}/linha-{v}.json"))
+linha = json.load(open(RAIZ + f"src/{'cortes' if v.startswith('corte') else video}/linha-{v}.json"))
 pngs = sorted(f for f in os.listdir(CAMADAS) if f.endswith(".png"))
 total = len(pngs)
 LOG = os.environ.get("NIVEL_LOG", "error")
