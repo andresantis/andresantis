@@ -1,0 +1,6 @@
+{
+ "_nota": "Vídeo 13 (iPhone SDR 1080x1920 30 fps, só convertido para H.264). Abertura com telas do vídeo 14 (lançamento da OpenAI) por cima da fala. Cortes aprovados: 'dentro da internet,' (40,7) e a parte final da chamada 'com apenas três minutinhos... dentro da resposta.' (107,3 em diante). Sem zoom.",
+ "cortes": [[40.7, 41.55]],
+ "versoes": {"completa": [[0.0, 107.25]]},
+ "zoom": false
+}
