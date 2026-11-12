@@ -9,7 +9,7 @@ import numpy as np
 video, v = sys.argv[1], sys.argv[2]
 RAIZ = "/home/user/andresantis/"
 ZOOM = "crop=982:1746:44:69,scale=1080:1920:flags=lanczos"
-tr = json.load(open(RAIZ + f"src/{video}/linha-{v}.json"))["trechos"]
+tr = json.load(open(RAIZ + f"src/{'cortes' if v.startswith('corte') else video}/linha-{v}.json"))["trechos"]
 COM_ZOOM = json.load(open(RAIZ + f"edicao/{video}/config.json")).get("zoom", True)
 
 
