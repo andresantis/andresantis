@@ -12,7 +12,7 @@ import json, os, shutil, subprocess, sys
 
 video, v = sys.argv[1], sys.argv[2]
 RAIZ = "/home/user/andresantis/"
-COMP = {("video1", "curta"): "Video1-Curta", ("video1", "completa"): "Video1-Completa", ("video2", "completa"): "Video2", ("video3", "completa"): "Video3", ("video4", "completa"): "Video4", ("video5", "completa"): "Video5", ("video6", "completa"): "Video6", ("video7", "completa"): "Video7", ("video8", "completa"): "Video8", ("video13", "completa"): "Video13"}.get((video, v)) or "Corte" + v[len("corte"):]
+COMP = {("video1", "curta"): "Video1-Curta", ("video1", "completa"): "Video1-Completa", ("video2", "completa"): "Video2", ("video3", "completa"): "Video3", ("video4", "completa"): "Video4", ("video5", "completa"): "Video5", ("video6", "completa"): "Video6", ("video7", "completa"): "Video7", ("video8", "completa"): "Video8", ("video13", "completa"): "Video13", ("video15", "completa"): "Video15"}.get((video, v)) or "Corte" + v[len("corte"):]
 PROPS = (lambda modo: {"versao": v, "modo": modo}) if video == "video1" else (lambda modo: {"id": v, "modo": modo}) if v.startswith("corte") else (lambda modo: {"modo": modo})
 COM_ZOOM = json.load(open(RAIZ + f"edicao/{video}/config.json")).get("zoom", True)
 NAVEGADOR = "/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell"

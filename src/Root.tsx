@@ -14,6 +14,8 @@ import { Capa8 } from "./video8/Capa";
 import { Corte, duracaoCorte } from "./cortes/Corte";
 import { duracaoVideo13, Video13 } from "./video13/Video13";
 import { Capa13 } from "./video13/Capa";
+import { duracaoVideo15, Video15 } from "./video15/Video15";
+import { Capa15 } from "./video15/Capa";
 import { CapaCorte } from "./cortes/Capa";
 
 const IDS_CORTES = ["corte1", "corte2", "corte3", "corte4", "corte5", "corte6", "corte7", "corte8"];
@@ -100,6 +102,15 @@ export const RemotionRoot: React.FC = () => {
         {...FORMATO_VERTICAL}
       />
       <Composition id="Capa13" component={Capa13} durationInFrames={1} defaultProps={{ thumb: false }} {...FORMATO_VERTICAL} />
+      <Composition
+        id="Video15"
+        component={Video15}
+        durationInFrames={duracaoVideo15()}
+        defaultProps={{ modo: "previa" as const }}
+        {...FORMATO_VERTICAL}
+      />
+      <Composition id="Capa15" component={Capa15} durationInFrames={1} defaultProps={{ thumb: false }} {...FORMATO_VERTICAL} />
+      <Composition id="Thumb15" component={Capa15} durationInFrames={1} defaultProps={{ thumb: true }} {...FORMATO_VERTICAL} height={1350} />
       <Composition id="Thumb13" component={Capa13} durationInFrames={1} defaultProps={{ thumb: true }} {...FORMATO_VERTICAL} height={1350} />
       {IDS_CORTES.map((id, i) => (
         <Composition key={id} id={`Corte${i + 1}`} component={Corte} durationInFrames={duracaoCorte(id)}
