@@ -31,7 +31,10 @@ def subtrai(trechos, cortes):
 def linha(base, versao):
     pausas = [tuple(map(float, l.split("\t")[:2])) for l in open(base + "pausas.tsv").read().strip().split("\n")]
     config = json.load(open(base + "config.json"))
-    cortes = [(a + FOLGA_FIM_FALA, b - FOLGA_INICIO_FALA) for a, b in pausas] + [tuple(c) for c in config["cortes"]]
+    # Corte mais leve (opcional no config): só pausas maiores que "pausa_minima", com respiro "folga" [fim, início].
+    minima = config.get("pausa_minima", 0)
+    fim, inicio = config.get("folga", [FOLGA_FIM_FALA, FOLGA_INICIO_FALA])
+    cortes = [(a + fim, b - inicio) for a, b in pausas if b - a >= minima] + [tuple(c) for c in config["cortes"]]
     clips = subtrai([tuple(t) for t in config["versoes"][versao]], sorted(cortes))
     quadros = []
     for a, b in clips:
