@@ -17,9 +17,9 @@ export const Capa15: React.FC<{ thumb?: boolean }> = ({ thumb }) => {
           fontWeight: 800, textTransform: "uppercase", padding: "12px 26px", borderRadius: 999 }}>
           • gestão
         </span>
-        <div style={{ marginTop: 28, color: "#FFFFFF", fontSize: 104, fontWeight: 800, letterSpacing: "-0.045em", lineHeight: 1.0,
+        <div style={{ marginTop: 28, color: "#FFFFFF", fontSize: 92, fontWeight: 800, letterSpacing: "-0.045em", lineHeight: 1.0,
           textTransform: "uppercase", textShadow: "0 6px 30px rgba(0,0,0,0.5)" }}>
-          Contrato pela <span style={{ color: E.verde }}>prática</span>, não pelo currículo
+          Muita gente com problemas para contratar <span style={{ color: E.verde }}>pessoas boas</span>
         </div>
         <div style={{ marginTop: 34, display: "inline-flex", alignItems: "center", gap: 14, color: E.texto, fontSize: 38, fontWeight: 700,
           letterSpacing: "-0.03em" }}>
