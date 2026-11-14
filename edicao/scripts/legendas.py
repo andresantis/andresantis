@@ -194,7 +194,11 @@ def corrige_video13(pal):
 
 
 def corrige_video15(pal):
-    return troca_seq(pal, ["escape"], ["escassa."])
+    # o transcritor erra "escassa" de jeitos diferentes conforme o corte
+    for errada in ("escape", "escaça"):
+        if any(re.sub(r"[^\wÀ-ú]", "", w).lower() == errada for _, w in pal):
+            pal = troca_seq(pal, [errada], ["escassa,"])
+    return pal
 
 
 out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3, "video4": corrige_video4,
