@@ -1,0 +1,31 @@
+{
+ "_nota": "Vídeo 16 (iPhone HDR 1080x1920 -> SDR 30 fps). Corte leve aprovado na etapa 1: pausas acima de 0,7 s (com respiro), 'mano' solto (32,7), 'deixa aí, deixa aí. Deixa aí,' (39,5-41,0) e 'né, cara' (41,6). A faixa vermelha gravada no original (0,13-2,6 s, y 1540-1780) é coberta pela frase nas cores da marca. Sem zoom. Obs.: o 'Caralho' da primeira transcrição era erro de escuta; a fala é 'que você fez, pra brincadeira'.",
+ "cortes": [
+  [
+   32.65,
+   32.95
+  ],
+  [
+   39.45,
+   40.95
+  ],
+  [
+   41.55,
+   41.85
+  ]
+ ],
+ "versoes": {
+  "completa": [
+   [
+    0.4,
+    45.2
+   ]
+  ]
+ },
+ "pausa_minima": 0.7,
+ "folga": [
+  0.25,
+  0.15
+ ],
+ "zoom": false
+}
