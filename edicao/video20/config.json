@@ -1,0 +1,18 @@
+{
+ "_nota": "Vídeo 20 (reunião de segunda, abertura da semana). Corte leve: fala inteira, só pausas acima de 0,7 s. Sem zoom.",
+ "versoes": {
+  "completa": [
+   [
+    0.0,
+    78.2
+   ]
+  ]
+ },
+ "cortes": [],
+ "pausa_minima": 0.7,
+ "folga": [
+  0.25,
+  0.15
+ ],
+ "zoom": false
+}

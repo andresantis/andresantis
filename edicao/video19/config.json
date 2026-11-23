@@ -1,0 +1,74 @@
+{
+ "_nota": "Vídeo 19 (reunião: o funil, a sazonalidade e o teste A/B). Trechos escolhidos na ordem da conversa, corte leve dentro deles. Fora: números de anúncio (R$ 13, R$ 19 por lead) e conversa sem contexto. Sem zoom.",
+ "versoes": {
+  "completa": [
+   [
+    2.35,
+    5.0
+   ],
+   [
+    5.55,
+    15.9
+   ],
+   [
+    16.75,
+    23.6
+   ],
+   [
+    24.45,
+    29.9
+   ],
+   [
+    30.25,
+    36.9
+   ],
+   [
+    37.25,
+    41.4
+   ],
+   [
+    44.9,
+    46.0
+   ],
+   [
+    48.75,
+    63.8
+   ],
+   [
+    112.65,
+    116.0
+   ],
+   [
+    116.55,
+    123.9
+   ],
+   [
+    174.05,
+    178.6
+   ],
+   [
+    229.75,
+    239.5
+   ],
+   [
+    254.75,
+    265.0
+   ],
+   [
+    279.75,
+    281.3
+   ],
+   [
+    281.75,
+    282.3
+   ]
+  ]
+ },
+ "cortes": [],
+ "pausa_minima": 0.7,
+ "folga": [
+  0.25,
+  0.15
+ ],
+ "zoom": false
+}
