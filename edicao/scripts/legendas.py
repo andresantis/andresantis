@@ -218,10 +218,27 @@ def corrige_video17(pal):
     return troca_seq(pal, ["passos"], ["espaços."])
 
 
+
+def corrige_reuniao(pal):
+    pal = [[t, w.lstrip("-").strip()] for t, w in pal]
+    pal = [p for p in pal if p[1]]
+    trocas = {
+        "video20": [(["está", "estigado"], ["tá", "instigado,"]), (["tem", "um", "prêmio"], []), (["uma", "perfeita"], ["Perfeito."])],
+        "video18": [(["tão", "muito", "fris"], [])],
+        "video19": [(["grato"], ["grátis"]), (["grato"], ["grátis,"]),
+                    (["talvez", "os", "falta", "um", "mês", "eu", "acho", "que", "dentro"], ["Talvez", "falta", "mais", "mensagem", "dentro"]),
+                    (["vindo", "vídeo"], ["pedindo", "vídeo"]), (["é", "um", "resolvo"], ["eu", "resolvo."]),
+                    (["eu", "não", "mudaria"], ["eu", "mudaria"]), (["vou", "fazer", "um", "teste", "a", "b"], ["Fazer", "um", "teste", "A/B."])],
+    }[video]
+    for velhas, novas in trocas:
+        pal = troca_seq(pal, velhas, novas)
+    return pal
+
+
 out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3, "video4": corrige_video4,
        "video5": corrige_video5, "video6": corrige_video6, "video7": corrige_video7, "video8": corrige_video8,
-       "video10": corrige_cortes, "video11": corrige_cortes, "video12": corrige_cortes, "video13": corrige_video13, "video15": corrige_video15, "video16": corrige_video16, "video17": corrige_video17}[video](pal)
-pasta = "cortes" if v.startswith("corte") else video
+       "video10": corrige_cortes, "video11": corrige_cortes, "video12": corrige_cortes, "video13": corrige_video13, "video15": corrige_video15, "video16": corrige_video16, "video17": corrige_video17, "video18": corrige_reuniao, "video19": corrige_reuniao, "video20": corrige_reuniao}[video](pal)
+pasta = "cortes" if v.startswith("corte") else "reunioes" if video in ("video18", "video19", "video20") else video
 os.makedirs(f"/home/user/andresantis/src/{pasta}", exist_ok=True)
 json.dump(out, open(f"/home/user/andresantis/src/{pasta}/legendas-{v}.json", "w"), ensure_ascii=False)
 print(v, len(out), "palavras")
