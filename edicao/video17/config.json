@@ -1,0 +1,8 @@
+{
+ "_nota": "Vídeo 17 (iPhone HDR 1080x1920 -> SDR 30 fps). Corte leve aprovado: só pausas acima de 0,7 s, com respiro. A repetição 'chega de deixar seus concorrentes...' fica (ênfase). Sem zoom.",
+ "cortes": [],
+ "versoes": {"completa": [[0.75, 37.2]]},
+ "pausa_minima": 0.7,
+ "folga": [0.25, 0.15],
+ "zoom": false
+}
