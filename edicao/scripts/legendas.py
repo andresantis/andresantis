@@ -212,9 +212,15 @@ def corrige_video16(pal):
     return pal
 
 
+
+def corrige_video17(pal):
+    pal = troca_seq(pal, ["pro", "própria", "ompitado"], ["para", "a", "Promptado"])
+    return troca_seq(pal, ["passos"], ["espaços."])
+
+
 out = {"video1": corrige_video1, "video2": corrige_video2, "video3": corrige_video3, "video4": corrige_video4,
        "video5": corrige_video5, "video6": corrige_video6, "video7": corrige_video7, "video8": corrige_video8,
-       "video10": corrige_cortes, "video11": corrige_cortes, "video12": corrige_cortes, "video13": corrige_video13, "video15": corrige_video15, "video16": corrige_video16}[video](pal)
+       "video10": corrige_cortes, "video11": corrige_cortes, "video12": corrige_cortes, "video13": corrige_video13, "video15": corrige_video15, "video16": corrige_video16, "video17": corrige_video17}[video](pal)
 pasta = "cortes" if v.startswith("corte") else video
 os.makedirs(f"/home/user/andresantis/src/{pasta}", exist_ok=True)
 json.dump(out, open(f"/home/user/andresantis/src/{pasta}/legendas-{v}.json", "w"), ensure_ascii=False)

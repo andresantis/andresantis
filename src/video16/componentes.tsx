@@ -12,18 +12,18 @@ export const FRASE: [string, boolean?][] = [
 ];
 
 // Card da frase, na área segura (x 90–910, acima da faixa que o Instagram cobre). Fica fora do eixo.
-export const CardFrase: React.FC<{ desde: number; ate: number }> = ({ desde, ate }) => {
+export const CardFrase: React.FC<{ desde: number; ate: number; frase?: [string, boolean?][]; top?: number }> = ({ desde, ate, frase = FRASE, top = 1110 }) => {
   const f = useCurrentFrame();
   const p = Math.min(cresce(f, desde, 6), interpolate(f, [ate - 6, ate], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
   if (p <= 0) return null;
   return (
-    <div style={{ position: "absolute", left: 90, width: 820, top: 1110, fontFamily: FONTE, background: E.superficie, borderRadius: 32,
+    <div style={{ position: "absolute", left: 90, width: 820, top, fontFamily: FONTE, background: E.superficie, borderRadius: 32,
       padding: "30px 36px", opacity: p, transform: `translateY(${(1 - p) * 40}px)`, boxShadow: "0 14px 40px rgba(0,0,0,0.45)" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, color: E.textoApoio, fontSize: 28, fontWeight: 600, marginBottom: 14 }}>
         <LogoPromptado tamanho={34} cor={E.texto} /> Promptado
       </div>
       <div style={{ color: "#FFFFFF", fontSize: 50, fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.15 }}>
-        {FRASE.map(([t, verde], i) => <span key={i} style={verde ? { color: E.verde } : undefined}>{t}</span>)}
+        {frase.map(([t, verde], i) => <span key={i} style={verde ? { color: E.verde } : undefined}>{t}</span>)}
       </div>
     </div>
   );
