@@ -7,7 +7,10 @@ Uso: python3 converte_hdr.py <entrada_hdr> <saida.mp4>
 import os, subprocess, sys
 
 # Gravações em 4K são reduzidas para 1080×1920 e acertadas para 30 fps (só tamanho e ritmo; a cor segue o mesmo ajuste).
-FILTRO = ("fps=30,zscale=w=1080:h=1920:f=lanczos,zscale=t=linear:npl=185,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,"
+# HORIZONTAL=1: vídeo gravado deitado e salvo em pé sem a marcação de rotação; gira 90° e sai em 1920×1080 (YouTube).
+HORIZONTAL = os.environ.get("HORIZONTAL") == "1"
+FILTRO = (("transpose=2,fps=30,zscale=w=1920:h=1080:f=lanczos," if HORIZONTAL else "fps=30,zscale=w=1080:h=1920:f=lanczos,") +
+          "zscale=t=linear:npl=185,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,"
           "zscale=t=bt709:m=bt709:r=tv,format=yuv420p")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", sys.argv[1], "-vf", FILTRO,
                 "-c:v", "libx264", "-crf", os.environ.get("CRF", "10"), "-preset", "slow", "-pix_fmt", "yuv420p",
