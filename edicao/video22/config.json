@@ -1,0 +1,12 @@
+{
+ "_nota": "Vídeo 22 (no carro, 'ser caro é elogio'; original 720x1280 SDR ampliado para 1080x1920 a 30 fps). Corte leve aprovado na etapa 1: pausas acima de 0,7 s (com respiro), o 'E' do começo (começa em 0,46 s, em 'Deixa') e 'futuro cliente, na verdade já' (3,90-7,02: fica 'com um cliente, né, assinou conosco'; o 'né' é da fala original). Sem zoom.",
+ "cortes": [
+  [3.9, 7.02]
+ ],
+ "versoes": {
+  "completa": [[0.46, 60.02]]
+ },
+ "pausa_minima": 0.7,
+ "folga": [0.25, 0.15],
+ "zoom": false
+}
