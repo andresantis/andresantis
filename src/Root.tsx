@@ -1,5 +1,5 @@
 import { Composition } from "remotion";
-import { FORMATO_VERTICAL } from "./formato";
+import { FORMATO_HORIZONTAL, FORMATO_VERTICAL } from "./formato";
 import { Teste } from "./Teste";
 import { duracaoVideo1, Video1 } from "./video1/Video1";
 import { duracaoVideo2, Video2 } from "./video2/Video2";
@@ -22,6 +22,7 @@ import { duracaoVideo17, Video17 } from "./video17/Video17";
 import { Capa17 } from "./video17/Capa";
 import { duracaoReuniao, Reuniao } from "./reunioes/Reuniao";
 import { CapaReuniao } from "./reunioes/Capa";
+import { duracaoVideo21, Thumb21, Video21 } from "./video21/Video21";
 
 const IDS_REUNIOES = ["video18", "video19", "video20"];
 import { CapaCorte } from "./cortes/Capa";
@@ -149,6 +150,15 @@ export const RemotionRoot: React.FC = () => {
         <Composition key={`t${id}`} id={`Thumb${id.slice(5)}`} component={CapaReuniao} durationInFrames={1}
           defaultProps={{ id, thumb: true }} {...FORMATO_VERTICAL} height={1350} />
       ))}
+      <Composition
+        id="Video21"
+        component={Video21}
+        durationInFrames={duracaoVideo21()}
+        defaultProps={{ modo: "previa" as const }}
+        {...FORMATO_HORIZONTAL}
+      />
+      <Composition id="Thumb21" component={Thumb21} durationInFrames={1} {...FORMATO_HORIZONTAL} width={1280} height={720} />
+      <Composition id="Thumb21-HD" component={Thumb21} durationInFrames={1} {...FORMATO_HORIZONTAL} />
       <Composition id="Thumb13" component={Capa13} durationInFrames={1} defaultProps={{ thumb: true }} {...FORMATO_VERTICAL} height={1350} />
       {IDS_CORTES.map((id, i) => (
         <Composition key={id} id={`Corte${i + 1}`} component={Corte} durationInFrames={duracaoCorte(id)}

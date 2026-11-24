@@ -4,3 +4,10 @@ export const FORMATO_VERTICAL = {
   height: 1920,
   fps: 30,
 } as const;
+
+// Formato horizontal (YouTube).
+export const FORMATO_HORIZONTAL = {
+  width: 1920,
+  height: 1080,
+  fps: 30,
+} as const;
