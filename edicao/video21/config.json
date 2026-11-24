@@ -1,0 +1,8 @@
+{
+ "_nota": "Vídeo 21 (YouTube, gravado na horizontal; o arquivo do iPhone veio deitado sem marcação de rotação: girado para 1920x1080, HDR -> SDR). Corte leve aprovado: só pausas acima de 0,7 s, com respiro. Sem zoom.",
+ "cortes": [],
+ "versoes": {"completa": [[0.4, 58.43]]},
+ "pausa_minima": 0.7,
+ "folga": [0.25, 0.15],
+ "zoom": false
+}
