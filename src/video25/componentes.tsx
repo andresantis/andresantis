@@ -38,9 +38,9 @@ export const Traducao: React.FC<{ termo: string; texto: string; desde: number; y
 };
 
 // ---------- Logos das IAs (atrás da cabeça) + "= inteligências artificiais" ----------
-const ico = (path: string, cor: string, t = 60) => <svg viewBox="0 0 24 24" width={t} height={t}><path d={path} fill={cor} /></svg>;
+const ico = (path: string, cor: string, t = 50) => <svg viewBox="0 0 24 24" width={t} height={t}><path d={path} fill={cor} /></svg>;
 const LOGOS: [string, React.ReactNode][] = [
-  ["ChatGPT", <LogoChatGPT key="c" tamanho={60} />],
+  ["ChatGPT", <LogoChatGPT key="c" tamanho={50} />],
   ["Gemini", ico(siGooglegemini.path, `#${siGooglegemini.hex}`)],
   ["Claude", ico(siClaude.path, `#${siClaude.hex}`)],
   ["Perplexity", ico(siPerplexity.path, "#FFFFFF")],
@@ -55,14 +55,14 @@ export const LogosIAs: React.FC<{ desde: number; y: number; rotulo: number; ate?
         {LOGOS.map(([nome, logo], i) => {
           const q = cresce(f, desde + i * 4, 4);
           return (
-            <span key={nome} style={{ width: 104, height: 104, borderRadius: 26, background: E.superficie, display: "inline-flex", alignItems: "center",
+            <span key={nome} style={{ width: 84, height: 84, borderRadius: 22, background: E.superficie, display: "inline-flex", alignItems: "center",
               justifyContent: "center", transform: `scale(${q})`, boxShadow: sombra }}>{logo}</span>
           );
         })}
       </div>
       {r > 0 ? (
-        <div style={{ marginTop: 14, opacity: r }}>
-          <span style={{ display: "inline-block", background: E.verde, color: PRETO, fontSize: 34, fontWeight: 800, padding: "8px 22px", borderRadius: 999 }}>
+        <div style={{ marginTop: 8, opacity: r }}>
+          <span style={{ display: "inline-block", background: E.verde, color: PRETO, fontSize: 32, fontWeight: 800, padding: "6px 20px", borderRadius: 999 }}>
             = inteligências artificiais
           </span>
         </div>
@@ -115,13 +115,13 @@ export const CardPromptado: React.FC<{ desde: number; y: number; selo?: [string,
   const ps = selo ? cresce(f, selo[1], 4) : 0;
   return (
     <div style={{ ...base, left: CENTRO - LARG / 2, width: LARG, top: y, textAlign: "center", opacity: p }}>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 18, background: E.superficie, color: E.texto, fontSize: 52, fontWeight: 700,
-        letterSpacing: "-0.03em", padding: "16px 34px", borderRadius: 999, boxShadow: sombra, transform: `scale(${0.85 + 0.15 * p})` }}>
-        <LogoPromptado tamanho={56} cor={E.texto} /> {texto}
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 16, background: E.superficie, color: E.texto, fontSize: 44, fontWeight: 700,
+        letterSpacing: "-0.03em", padding: "12px 30px", borderRadius: 999, boxShadow: sombra, transform: `scale(${0.85 + 0.15 * p})` }}>
+        <LogoPromptado tamanho={46} cor={E.texto} /> {texto}
       </span>
       {selo && ps > 0 ? (
-        <div style={{ marginTop: 14 }}>
-          <span style={{ display: "inline-block", background: E.verde, color: PRETO, fontSize: 36, fontWeight: 700, padding: "10px 24px", borderRadius: 999,
+        <div style={{ marginTop: 8 }}>
+          <span style={{ display: "inline-block", background: E.verde, color: PRETO, fontSize: 32, fontWeight: 700, padding: "6px 22px", borderRadius: 999,
             transform: `scale(${0.8 + 0.2 * ps})`, opacity: ps, boxShadow: sombra }}>{selo[0]}</span>
         </div>
       ) : null}

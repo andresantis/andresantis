@@ -25,15 +25,15 @@ export const roteiroVideo25 = (p: Palavra[]): RoteiroA => {
   const itens: ItemA[] = [
     // gancho
     { de: a("agora"), ate: a("descobrir"), grande: grande("agora", { sublinhado: a("agora", 1, 0.25) }) },
-    atras(a("descobrir"), a("respostas"), <LogosIAs desde={a("descobrir")} rotulo={a("empresas")} y={Y} ate={a("respostas")} />),
+    ({ de: a("descobrir"), ate: a("respostas"), el: <LogosIAs desde={a("descobrir")} rotulo={a("empresas")} y={Y} ate={a("respostas")} /> }),
     ...tela(a("respostas"), a("nós"), <TelaChatIA desde={a("respostas")} resposta={a("inteligências")} marca={a("artificiais")} organico={a("orgânica")} />),
     // Promptado: especialistas e pioneiros
-    atras(a("nós"), a("simplesmente", 1, -0.4), <CardPromptado desde={a("nós")} y={Y} selo={["especialistas em GEO e AEO", a("especialistas")]}
-      ate={a("simplesmente", 1, -0.4)} />),
+    ({ de: a("nós"), ate: a("simplesmente", 1, -0.4), el: <CardPromptado desde={a("nós")} y={Y} selo={["especialistas em GEO e AEO", a("especialistas")]}
+      ate={a("simplesmente", 1, -0.4)} /> }),
     { de: a("pioneiro"), ate: a("se", 2), grande: grande("pioneiros", { sublinhado: a("pioneiro", 1, 0.4) }) },
-    atras(a("vem"), a("como"), <CardPromptado desde={a("vem")} y={Y} texto="vem para a Promptado →" ate={a("como")} />),
+    atras(a("vem"), a("como", 2), <CardPromptado desde={a("vem")} y={Y} texto="vem para a Promptado →" ate={a("como", 2)} />),
     // a pergunta
-    atras(a("como"), a("monitora", 1, -0.4), <Comentario desde={a("como")} y={Y} texto="como vocês fazem isso, André? 🤔" ate={a("monitora", 1, -0.4)} />),
+    atras(a("como", 2), a("monitora", 1, -0.4), <Comentario desde={a("como", 2)} y={Y} texto="como vocês fazem isso, André? 🤔" ate={a("monitora", 1, -0.4)} />),
     // monitoramento completo
     ...tela(a("monitora", 1, -0.4), a("monitora", 2, -0.3), <TelaPlataforma desde={a("monitora", 1, -0.4)} ate={a("monitora", 2, -0.3)}
       rotulo="monitoramento do pé à cabeça" scan />),
