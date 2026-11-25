@@ -1,0 +1,8 @@
+{
+ "_nota": "Vídeo 23 (anúncio da Promptado: 'não somos o mais barato'). iPhone HDR 1080x1920 -> SDR 30 fps. Fala corrida, quase sem pausas: corte leve, só o silêncio do começo (0-0,87 s, com respiro). Sem zoom.",
+ "cortes": [],
+ "versoes": {"completa": [[0.62, 51.5]]},
+ "pausa_minima": 0.7,
+ "folga": [0.25, 0.15],
+ "zoom": false
+}
