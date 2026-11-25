@@ -31,7 +31,7 @@ export const montaLinhas = (palavras: Palavra[], duracao: number, maxLetras = 26
 const NOMES: [RegExp, string][] = [
   [/\bias\b/g, "IAs"], [/\bia\b/g, "IA"], [/chatgpt/g, "ChatGPT"], [/gemini/g, "Gemini"], [/claude/g, "Claude"],
   [/perplexity/g, "Perplexity"], [/grok/g, "Grok"], [/\bx\b/g, "X"], [/google/g, "Google"], [/search/g, "Search"],
-  [/promptado/g, "Promptado"], [/\bb2b\b/g, "B2B"], [/gartner/g, "Gartner"], [/alexa/g, "Alexa"],
+  [/promptado/g, "Promptado"], [/\bb2b\b/g, "B2B"], [/\bseo\b/g, "SEO"], [/gartner/g, "Gartner"], [/alexa/g, "Alexa"],
 ];
 const minusculas = (t: string) => NOMES.reduce((s, [re, nome]) => s.replace(re, nome), t.toLowerCase());
 
