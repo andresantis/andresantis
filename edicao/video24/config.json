@@ -1,0 +1,8 @@
+{
+ "_nota": "Vídeo 24 (YouTube, gravado na horizontal; o arquivo do iPhone veio deitado sem marcação de rotação: girado para 1920x1080, HDR -> SDR). Corte leve aprovado: silêncio do fim e a palavra 'autonomia.' (54,30-54,77 s, conferido no som), que o André corrige logo depois para 'Autoridade'. Sem zoom.",
+ "cortes": [[54.3, 54.77]],
+ "versoes": {"completa": [[0.0, 59.2]]},
+ "pausa_minima": 0.7,
+ "folga": [0.25, 0.15],
+ "zoom": false
+}
