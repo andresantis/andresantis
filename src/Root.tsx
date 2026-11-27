@@ -26,6 +26,7 @@ import { duracaoVideo23, Video23 } from "./video23/Video23";
 import { Capa23 } from "./video23/Capa";
 import { duracaoVideo25, Video25 } from "./video25/Video25";
 import { Capa25 } from "./video25/Capa";
+import { duracaoVideo26, Video26 } from "./video26/Video26";
 import { duracaoReuniao, Reuniao } from "./reunioes/Reuniao";
 import { CapaReuniao } from "./reunioes/Capa";
 import { duracaoVideo21, Thumb21, Video21 } from "./video21/Video21";
@@ -172,6 +173,13 @@ export const RemotionRoot: React.FC = () => {
       />
       <Composition id="Capa25" component={Capa25} durationInFrames={1} defaultProps={{ thumb: false }} {...FORMATO_VERTICAL} />
       <Composition id="Thumb25" component={Capa25} durationInFrames={1} defaultProps={{ thumb: true }} {...FORMATO_VERTICAL} height={1350} />
+      <Composition
+        id="Video26"
+        component={Video26}
+        durationInFrames={duracaoVideo26()}
+        defaultProps={{ modo: "previa" as const }}
+        {...FORMATO_VERTICAL}
+      />
       {IDS_REUNIOES.map((id) => (
         <Composition key={id} id={`Video${id.slice(5)}`} component={Reuniao} durationInFrames={duracaoReuniao(id)}
           defaultProps={{ id, modo: "previa" as const }} {...FORMATO_VERTICAL} />
